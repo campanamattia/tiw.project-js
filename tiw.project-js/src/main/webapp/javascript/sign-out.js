@@ -8,7 +8,7 @@
                     sessionStorage.removeItem("userName");
                     window.location.href = "../sign-in.html";
                 }else{
-                    document.getElementById("error").textContent = message;
+                    document.getElementById("logout-error").textContent = message;
                 }
             }
         });

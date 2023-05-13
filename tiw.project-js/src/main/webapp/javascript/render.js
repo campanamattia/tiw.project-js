@@ -1,4 +1,5 @@
 var render = new Render();
+
 //for home page use
 var listPlaylist;
 var listSong;
@@ -10,50 +11,54 @@ var lowerBound = 0;
 
 function Render(){
     this.showHomePage = function(){
+
         //resetting the document
         render.reset();
 
         //make the home page the only visible page
-        document.getElementById("home-page").className = "home-page";
-        document.getElementById("playlist-page").className = "masked";
-        documetn.getElementById("player-page").className = "masked";
-        document.getElementById("sorting-page").className = "masked";
+        document.getElementById("home-page").className = "on";
+        document.getElementById("playlist-page").className = "off";
+        documetn.getElementById("player-page").className = "off";
+        document.getElementById("sorting-page").className = "off";
 
-        document.getElementById("title").textContent = "Welcome back" + sessionStorage.getItem("userName");
-        document.getElementById("error").textContent = "";
+        document.getElementById("home-button").className = "off";
+
+        //writing the welcome message
+        let home = document.getElementById("home-page");
+        let title = home.querySelector("#title");
+        title.textContent = "Welcome back" + sessionStorage.getItem("userName");
 
         if(listPlaylist == null){
-            makeCall("GET", "GetPlaylist", null, function(res){
+            makeCall("GET", "GetPlaylistList", null, function(res){
                 if(res.readyState === XMLHttpRequest.DONE){
                     let message = res.responseText;
                     if(res.status === 200){
                         this.listPlaylist = JSON.parse(message);
-                        render.showAllPlaylist();
+                        render.showAllPlaylistList(home);
                     }else{
-                        document.getElementById("pll-error").textContent = message; //playlist list error
+                        document.getElementById("playlist-error").textContent = message; //playlist list error
                     }
                 }
             });
-        } else render.showAllPlaylist();
+        } else render.showAllPlaylistList(home);
         if(listSong == null){
-            makeCall("GET", "GetSong", null, function(res){
+            makeCall("GET", "GetSongs", null, function(res){
                 if(res.readyState === XMLHttpRequest.DONE){
                     let message = res.responseText;
                     if(res.status === 200){
                         this.listSong = JSON.parse(message);
-                        render.showCheckBoxSongs();
+                        render.showCheckBoxSongs(home);
                     }else{
-                        document.getElementById("sl-error").textContent = message; //song list error
+                        document.getElementById("songlist-error").textContent = message; //song list error
                     }
                 }
             });
-        } else render.showCheckBoxSongs();
+        } else render.showCheckBoxSongs(home);
     } 
 
-    this.showAllPlaylist = function(){
-        let table = document.getElementById("playlist-table");
-        //empty the table
-        table.innerHTML = "";
+    this.showAllPlaylistList = function(home){
+        
+        let table = home.querySelector("playlist-table");
        
         for (let i = 0; i < listPlaylist.length; i++) {
             let row = document.createElement("tr");
@@ -70,7 +75,7 @@ function Render(){
                         if(res.status === 200){
                             render.showPlaylistPage(playlistName, JSON.parse(message));
                         }else{
-                            document.getElementById("pl-error").textContent = message; //playlist error
+                            home.querySelector("#playlist-error").textContent = message; //playlist error
                         }
                     }
                 });
@@ -89,11 +94,13 @@ function Render(){
     };
           
 
-    this.showCheckBoxSongs = function(){
-        let checkbox = document.getElementById("song-checkbox");
-        checkbox.className = "vertical-checkbox";
-        checkbox.innerHTML = "";
+    this.showCheckBoxSongs = function(home){
+
+        let checkbox = home.querySelector("#song-checkbox");
+
+        //add the songs to the checkbox
         for (let i = 0; i < this.listPlaylist.length; i++){
+            //creating the chackbox element
             let box = document.createElement("input");
             let label = document.createElement("label");
             box.type = "checkbox";
@@ -102,6 +109,8 @@ function Render(){
             box.id = "song"+i;
             box.value = this.listPlaylist[i].id;
             label.textContent = this.listPlaylist[i].name;
+
+            //adding the song to the checkbox
             checkbox.appendChild(label);
             checkbox.appendChild(box);
         }
@@ -113,14 +122,15 @@ function Render(){
         render.reset();
 
         //make the playlist page the only visible page
-        document.getElementById("home-page").className = "masked";
-        document.getElementById("playlist-page").className = "playlist-page";
-        documetn.getElementById("player-page").className = "masked";
-        document.getElementById("sorting-page").className = "masked";
+        document.getElementById("home-page").className = "off";
+        document.getElementById("playlist-page").className = "on";
+        documetn.getElementById("player-page").className = "off";
+        document.getElementById("sorting-page").className = "off";
 
         //show the playlist name
-        document.getElementById("playlist-title").textContent = "Playlist: " + playlistName;
-        document.getElementById("error").textContent = "";
+        let playlist = document.getElementById("playlist-page");
+        let title = playlist.querySelector("#title");
+        title.textContent ="Playlist: " + playlistName;
 
         let table = document.getElementById("song-table");
         //empty the table
@@ -146,7 +156,7 @@ function Render(){
 
                 //add event listener to the song name
             insideName.addEventListener("click", function() {
-                makeCall("GET", "GetSong?songName="+name, null, function(res){
+                makeCall("GET", "PlaySong?songName="+name, null, function(res){
                     if(res.readyState === XMLHttpRequest.DONE){
                         let message = res.responseText;
                         if(res.status === 200){
@@ -177,10 +187,10 @@ function Render(){
         render.reset();
 
         //make the player page the only visible page
-        document.getElementById("home-page").className = "masked";
-        document.getElementById("playlist-page").className = "masked";
-        documetn.getElementById("player-page").className = "player-page";
-        document.getElementById("sorting-page").className = "masked";
+        document.getElementById("home-page").className = "off";
+        document.getElementById("playlist-page").className = "off";
+        documetn.getElementById("player-page").className = "on";
+        document.getElementById("sorting-page").className = "off";
 
         let infoContainer = document.getElementById("infoContainer");
         infoContainer.innerHTML = "";
@@ -219,5 +229,17 @@ function Render(){
         //add the player
         let player = document.getElementById("player");
         player.src = song.songContent;
+        infoContainer.appendChild(player);
+    }
+
+    this.showSortingPage = function(){
+
+    }
+
+    this.reset() = function(){
+        reset.resetHomePage();
+        reset.resetPlaylistPage();
+        reset.resetPlayerPage();
+        reset.resetSortingPage();
     }
 }
