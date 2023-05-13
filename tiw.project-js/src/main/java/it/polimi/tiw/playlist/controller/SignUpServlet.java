@@ -6,8 +6,6 @@ import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
-import org.apache.commons.lang.StringEscapeUtils;
-
 import java.sql.*;
 
 import it.polimi.tiw.playlist.dao.UserDAO;
@@ -37,8 +35,8 @@ public class SignUpServlet extends HttpServlet{
 	
 	//method that creates the user credentials
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		String userName = StringEscapeUtils.escapeJava(request.getParameter("userName"));
-		String password = StringEscapeUtils.escapeJava(request.getParameter("password"));
+		String userName = request.getParameter("userName");
+		String password = request.getParameter("password");
 		String error = null;
 		
 		//checking the given parameters
@@ -65,7 +63,7 @@ public class SignUpServlet extends HttpServlet{
 			}
 		}
 		
-		//if an error occurred, the page will be reloaded
+		//if an error occurred, it will be shown in the page
 		response.setStatus(HttpServletResponse.SC_BAD_REQUEST);//Code 400
 		response.getWriter().println(error);
 	}

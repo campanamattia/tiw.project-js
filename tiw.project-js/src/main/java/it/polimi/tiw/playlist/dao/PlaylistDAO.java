@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import it.polimi.tiw.playlist.beans.Playlist;
+import it.polimi.tiw.playlist.utils.FromJsonToArray;
 
 public class PlaylistDAO {
 	
@@ -115,7 +116,7 @@ public class PlaylistDAO {
 	}
 	
 	//methods that creates a playlist wich contains some songs
-	public boolean addPlaylistWithSongs(String playlistName , String userName , Date creationDate , Integer[] songs) throws SQLException {
+	public boolean addPlaylistWithSongs(String playlistName, String userName, Date creationDate, Integer[] songs) throws SQLException {
 		if(songs.length == 0) return false;
 		boolean result = false;
 		
@@ -145,7 +146,7 @@ public class PlaylistDAO {
 	}
 	
 	//method that verifies whether a playlist belongs to the given user or not
-	public boolean belongTo(String playlistName , String userName) throws SQLException{
+	public boolean belongTo(String playlistName, String userName) throws SQLException{
 		boolean result = false;
 		String query = "SELECT * FROM PLAYLIST WHERE Name = ? AND UserName = ?";
 		PreparedStatement pStatement = null;
@@ -256,4 +257,75 @@ public class PlaylistDAO {
 		return result;
 	}
 
+	//method that edits the sorting of a playlist
+	public boolean addSorting(String jsonSorting, String playlistName, String userName) throws SQLException{
+		boolean result = false;
+		String query = "UPDATE PLAYLIST SET Sorting = ? WHERE Name = ? AND UserName = ?";
+		PreparedStatement pStatement = null;
+		
+		try{
+			pStatement = con.prepareStatement(query);
+			pStatement.setString(1, jsonSorting);
+			pStatement.setString(2, playlistName);
+			pStatement.setString(3, playlistName);
+			if(pStatement.executeUpdate() > 0) result = true;
+		}catch(SQLException e) {
+			throw new SQLException();
+		}finally {
+			try {
+				if(pStatement != null) {
+					pStatement.close();
+				}
+			}catch(Exception e2) {
+				throw new SQLException(e2);
+		    }
+		}
+		
+		return result;
+	}
+	
+	public ArrayList<Integer> getSorting(String playlistName, String userName) throws SQLException{
+		ArrayList<Integer> result = null;
+		String query = "SELECT Sorting FROM PLAYLIST WHERE Name = ? AND UserName = ?";
+		PreparedStatement pStatement = null;
+		ResultSet queryRes = null;
+		String jSon = null;
+		
+		try {
+			pStatement = con.prepareStatement(query);
+			pStatement.setString(1, playlistName);
+			pStatement.setString(2, playlistName);
+			
+			queryRes = pStatement.executeQuery();
+			
+			if(queryRes.next())
+				 jSon = queryRes.getString("Sorting");
+			
+			if(jSon == null)
+				return null;
+			
+			result = FromJsonToArray.fromJsonToArrayList(jSon);
+			
+		}catch(SQLException e) {
+			throw new SQLException();
+		}finally {
+			try {
+				if(queryRes != null) {
+					queryRes.close();
+				}
+			}catch(Exception e1) {
+				throw new SQLException(e1);
+			}
+			try {
+				if(pStatement != null) {
+					pStatement.close();
+				}
+			}catch(Exception e2) {
+				throw new SQLException(e2);
+		    }
+		}
+		
+		return result;
+	}
+	
 }

@@ -8,8 +8,6 @@ import javax.servlet.http.*;
 
 import java.sql.*;
 
-import org.apache.commons.lang.StringEscapeUtils;
-
 import it.polimi.tiw.playlist.dao.UserDAO;
 import it.polimi.tiw.playlist.utils.ConnectionHandler;
 
@@ -36,8 +34,8 @@ public class SignInServlet extends HttpServlet {
 	
 	//method that checks the user credentials
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		String userName = StringEscapeUtils.escapeJava(request.getParameter("userName"));
-		String password = StringEscapeUtils.escapeJava(request.getParameter("password"));
+		String userName = request.getParameter("userName");
+		String password = request.getParameter("password");
 		
 		//checking the given parameters
 		if(userName == null || password == null || userName.isEmpty() || password.isEmpty()) {

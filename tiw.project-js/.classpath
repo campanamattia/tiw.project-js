@@ -13,9 +13,10 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
-	<classpathentry kind="lib" path="src/main/webapp/lib/apache-commons-lang.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/lib/gson-2.8.6.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/lib/javassist-3.20.0-GA.jar"/>
-	<classpathentry kind="lib" path="src/main/webapp/lib/mysql-connector-j-8.0.32.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/apache-commons-lang.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/gson-2.8.6.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/javassist-3.20.0-GA.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/mysql-connector-j-8.0.32.jar"/>
+	<classpathentry kind="lib" path="src/main/webapp/WEB-INF/lib/commons-io-2.11.0.jar"/>
 	<classpathentry kind="output" path="build/classes"/>
 </classpath>

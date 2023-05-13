@@ -2,6 +2,7 @@ package it.polimi.tiw.playlist.controller;
 
 import java.io.*;
 import javax.servlet.*;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
@@ -13,6 +14,7 @@ import it.polimi.tiw.playlist.dao.SongDAO;
 import it.polimi.tiw.playlist.utils.ConnectionHandler;
 
 @WebServlet("/CreatePlaylist")
+@MultipartConfig
 public class CreatePlaylistServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
@@ -35,35 +37,36 @@ public class CreatePlaylistServlet extends HttpServlet {
 	//method that creates a playlist
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
 		HttpSession session = request.getSession(true);
-		ServletContext servletContext = getServletContext();
 		SongDAO songDAO = new SongDAO(this.connection);
 		PlaylistDAO playlistDAO = new PlaylistDAO(this.connection);
 		String userName = (String)session.getAttribute("user");
-		String playlistError = null;
+		String error = null;
 		
 		String playlistName = request.getParameter("playlistName");
 		
 		//checking whether the given playlist name is valid or not
 		if(playlistName == null || playlistName.isEmpty()) {
-			playlistError = "Missing parameters";
+			error = "Missing parameters";
 		}
 		else if(playlistName.length() > 50) {
-			playlistError = "Playlist name is too long";
+			error = "Playlist name is too long";
 		}
-		if(playlistError == null){
+		if(error == null){
 			try {
 				if(playlistDAO.taken(playlistName, userName)) {
-					playlistError = playlistName + " playlist already exist";
+					error = playlistName + " playlist already exist";
 				}
 			} catch (SQLException e) {
-				playlistError = "Database error, try again";
+				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);//Code 500
+				response.getWriter().println("Database error, try again");
+				return;
 			}
 		}
 		
-		//if an error occurred, the home page will be reloaded
-		if(playlistError != null) {
-			String path = servletContext.getContextPath() + "/Home?=playlistError=" + playlistError;
-			response.sendRedirect(path);
+		//if an error occurred, it will be shown in the page
+		if(error != null) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);//Code 400
+			response.getWriter().println(error);
 			return;
 		}
 		
@@ -84,37 +87,38 @@ public class CreatePlaylistServlet extends HttpServlet {
 				}
 			}
 			if(songsToAdd.isEmpty()) {
-				playlistError = "You must select at least one song";
+				error = "You must select at least one song";
 			}
 		}
 		catch(SQLException e) {
-			playlistError = "Database error, try again";
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);//Code 500
+			response.getWriter().println("Database error, try again");
+			return;
 		}
 		catch(NumberFormatException e1) {
-			playlistError = "Something went wrong";
+			error = "Something went wrong";
 		}
 		
-		if(playlistError != null) {
-			String path = servletContext.getContextPath() + "/Home?playlistError=" + playlistError;
-			response.sendRedirect(path);
+		//if an error occurred, it will be shown in the page
+		if(error != null) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);//Code 400
+			response.getWriter().println(error);
 			return;
 		}
 		
 		try {
 			if(!playlistDAO.addPlaylistWithSongs(playlistName, userName, new Date(System.currentTimeMillis()), songsToAdd.toArray(new Integer[songsToAdd.size()]))) {
-				playlistError = "Database error: unable to upload your playlist";
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);//Code 400
+				response.getWriter().println("Database error: unable to upload your playlist");
+				return;
 			}
 		} catch(SQLException e) {
-			playlistError = "Database error, try again";
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);//Code 500
+			response.getWriter().println("Database error, try again");
+			return;
 		}
 		
-		
-		String path = servletContext.getContextPath() + "/Home";
-		if(playlistError != null) {
-			path += "?playlistError=" + playlistError;
-		}
-		else path += "?message=Playlist succesfully created";
-		response.sendRedirect(path);
+		response.setStatus(HttpServletResponse.SC_OK);//Code 200
 	}
 	
 	public void destroy() {

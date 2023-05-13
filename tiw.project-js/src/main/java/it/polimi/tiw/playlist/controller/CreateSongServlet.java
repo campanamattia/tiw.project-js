@@ -44,7 +44,6 @@ public class CreateSongServlet extends HttpServlet {
 	//method that creates a song
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException{
 		HttpSession session = request.getSession(true);
-		ServletContext servletContext = getServletContext();
 		String userName = (String)session.getAttribute("user");
 		
 		String songTitle = request.getParameter("songTitle");
@@ -57,71 +56,71 @@ public class CreateSongServlet extends HttpServlet {
 		Part fileImage = request.getPart("fileImage");
 		Part fileAudio = request.getPart("fileAudio");
 		
-		String songError = null;
+		String error = null;
 		
 		//Checking the String parameters
 		if(songTitle == null || songTitle.isEmpty() || genre == null || genre.isEmpty() || singer == null || singer.isEmpty()
 				|| albumTitle == null || albumTitle.isEmpty() || year == null || year.isEmpty() 
 				|| fileImage == null || fileImage.getSize() <= 0 || fileAudio == null ||  fileAudio.getSize() <= 0) {
-			songError = "Missing parameters";
+			error = "Missing parameters";
 		}
 		
-		if(songError == null && (songTitle.length() > 50)) songError = "Song title is too long";
-		if(songError == null && !( genre.equals("Others") || genre.equals("Rap") || genre.equals("Rock") || genre.equals("Jazz") || genre.equals("Pop") )) songError = "Genre not valid";
-		if(songError == null && (singer.length() > 50)) songError = "Singer name is too long";
-		if(songError == null && (singer.length() > 50)) songError = "Album title is too long";
+		if(error == null && (songTitle.length() > 50)) error = "Song title is too long";
+		if(error == null && !( genre.equals("Others") || genre.equals("Rap") || genre.equals("Rock") || genre.equals("Jazz") || genre.equals("Pop") )) error = "Genre not valid";
+		if(error == null && (singer.length() > 50)) error = "Singer name is too long";
+		if(error == null && (singer.length() > 50)) error = "Album title is too long";
 		
-		if(songError == null) {
+		if(error == null) {
 			try {
 				publicationYear = Integer.parseInt(year);
 				int currentYear = Calendar.getInstance().get(Calendar.YEAR);
 				if(publicationYear > currentYear)
-					songError = "The release year of the album is bigger than the current year";
+					error = "The release year of the album is bigger than the current year";
 			}catch(NumberFormatException e) {
-				songError = "The release year of the album is not valid";
+				error = "The release year of the album is not valid";
 			}
 		}
 		
-		//if an error occurred, the home page is reloaded
-		if(songError != null) {
-			String path = servletContext.getContextPath() + "/Home?songError=" + songError;
-			response.sendRedirect(path);
+		//if an error occurred, it will be shown in the page
+		if(error != null) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);//Code 400
+			response.getWriter().println(error);
 			return;
 		}
 		
 		//Checking the image file
 		String fileImageName = Path.of(fileImage.getSubmittedFileName()).getFileName().toString();
-		if(fileImageName.contains("/")) songError = "'/' are not allowed in file names";
+		if(fileImageName.contains("/")) error = "'/' are not allowed in file names";
 		else {
-			if(!fileImage.getContentType().startsWith("image")) songError = "The image file is not valid;";
+			if(!fileImage.getContentType().startsWith("image")) error = "The image file is not valid;";
 			else {
-				if(fileImage.getSize() > 5000000) songError = "Image file size is too big;"; //5 000 000 bytes = 5MB
-				else if(fileImageName.length() > 50) songError = "Image file name is too long";
+				if(fileImage.getSize() > 5000000) error = "Image file size is too big;"; //5 000 000 bytes = 5MB
+				else if(fileImageName.length() > 50) error = "Image file name is too long";
 			}
 		}
 		
-		//if an error occurred, the home is reloaded
-		if(songError != null) {
-			String path = servletContext.getContextPath() + "/Home?songError=" + songError;
-			response.sendRedirect(path);
+		//if an error occurred, it will be shown in the page
+		if(error != null) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);//Code 400
+			response.getWriter().println(error);
 			return;
 		}
 		
 		//Checking the audio file
 		String fileAudioName = Path.of(fileAudio.getSubmittedFileName()).getFileName().toString();
-		if(fileAudioName.contains("/")) songError = "'/' are not allowed in file names";
+		if(fileAudioName.contains("/")) error = "'/' are not allowed in file names";
 		else {
-			if(!fileAudio.getContentType().startsWith("audio")) songError = "The audio file is not valid;";
+			if(!fileAudio.getContentType().startsWith("audio")) error = "The audio file is not valid;";
 			else {
-				if(fileAudio.getSize() > 5000000) songError = "Audio file size is too big;"; //5 000 000 bytes = 5MB
-				else if(fileAudioName.length() > 50) songError = "Audio file name is too long";	
+				if(fileAudio.getSize() > 5000000) error = "Audio file size is too big;"; //5 000 000 bytes = 5MB
+				else if(fileAudioName.length() > 50) error = "Audio file name is too long";	
 			}
 		}
 		
-		//if an error occurred, the home is reloaded
-		if(songError != null) {
-			String path = servletContext.getContextPath() + "/Home?songError=" + songError;
-			response.sendRedirect(path);
+		//if an error occurred, it will be shown in the page
+		if(error != null) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);//Code 400
+			response.getWriter().println(error);
 			return;
 		}
 		
@@ -131,34 +130,38 @@ public class CreateSongServlet extends HttpServlet {
 		String fileAudioPath = this.audioFolderPath + userName + "_" + fileAudioName;
 		
 		//checking whether an audio/image file with the same name already exists or not
-		if(songError == null && new File(fileAudioPath).exists()) songError = "An audio file with this name already exists, change the name please";
+		if(error == null && new File(fileAudioPath).exists()) error = "An audio file with this name already exists, change the name please";
 		
 		boolean alreadyExists = new File(fileImagePath).exists();
 		
 		//storing the two files
-		if(songError == null) {
+		if(error == null) {
 			if(!alreadyExists) { //if the image file already exists, it will not be replaced		
 				try {
 					Files.copy(fileImage.getInputStream(), new File(fileImagePath).toPath());
 				} catch (Exception e) {
-					songError = "Error in uploading the image";
+					response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);//Code 500
+					response.getWriter().println("Error in uploading the image");
+					return;
 				}
 			}
 			
-			if(songError == null) {
+			if(error == null) {
 				try {
 					Files.copy(fileAudio.getInputStream(), new File(fileAudioPath).toPath());
 				} catch (Exception e) {
-					songError = "Error in uploading the audio";
+					response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);//Code 500
+					response.getWriter().println("Error in uploading the audio");
+					return;
 				}
 			}
 		}
 		
 		
-		//if an error occurred, the home is reloaded
-		if(songError != null) {
-			String path = servletContext.getContextPath() + "/Home?songError=" + songError;
-			response.sendRedirect(path);
+		//if an error occurred, it will be shown in the page
+		if(error != null) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);//Code 400
+			response.getWriter().println(error);
 			return;
 		}
 		
@@ -169,25 +172,21 @@ public class CreateSongServlet extends HttpServlet {
 					new File(fileImagePath).delete();
 				}
 				new File(fileAudioPath).delete();
-				songError = "This song already exists";
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);//Code 400
+				response.getWriter().println("This song already exists");
+				return;
 			}
 		} catch (SQLException e) {
 			if(!alreadyExists) {
 				new File(fileImagePath).delete();
 			}
 			new File(fileAudioPath).delete();
-			songError = "Database error, try again";
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);//Code 500
+			response.getWriter().println("Database error, try again");
+			return;
 		}
 		
-		
-		String path = servletContext.getContextPath() + "/Home";
-		if(songError != null) {
-			path += "?songError=" + songError;
-		}
-		else path += "?message=Song succesfully uploaded"; 
-		
-		
-		response.sendRedirect(path);	
+		response.setStatus(HttpServletResponse.SC_OK);//Code 200	
 	}
 	
 	public void destroy() {
