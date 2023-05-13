@@ -2,25 +2,23 @@ package it.polimi.tiw.playlist.controller;
 
 import java.io.*;
 import javax.servlet.*;
+import javax.servlet.annotation.MultipartConfig;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.*;
 
 import java.sql.*;
 
-import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.WebContext;
+import org.apache.commons.lang.StringEscapeUtils;
 
 import it.polimi.tiw.playlist.dao.UserDAO;
 import it.polimi.tiw.playlist.utils.ConnectionHandler;
-import it.polimi.tiw.playlist.utils.TemplateHandler;
-
 
 @WebServlet("/SignIn")
+@MultipartConfig
 public class SignInServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 	private Connection connection;
-	private TemplateEngine templateEngine;
 	
 	public SignInServlet() {
 		super();
@@ -30,7 +28,6 @@ public class SignInServlet extends HttpServlet {
 		try {
 			ServletContext context = getServletContext();
 			this.connection = ConnectionHandler.getConnection(context);
-			this.templateEngine = TemplateHandler.getTemplateEngine(context);
 			
 		} catch (UnavailableException  e) {
 			
@@ -39,36 +36,32 @@ public class SignInServlet extends HttpServlet {
 	
 	//method that checks the user credentials
 	public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
-		ServletContext servletContext = getServletContext();
-		final WebContext ctx = new WebContext(request, response, servletContext, request.getLocale());
-		String userName = request.getParameter("userName");
-		String password = request.getParameter("password");
-		String error = null;
+		String userName = StringEscapeUtils.escapeJava(request.getParameter("userName"));
+		String password = StringEscapeUtils.escapeJava(request.getParameter("password"));
 		
 		//checking the given parameters
-		if(userName == null || password == null || userName.isEmpty() || password.isEmpty()) error = "Missing parameters";
-		else {
-			try {
-				if(new UserDAO(this.connection).authentication(userName, password)) {
-					request.getSession(true).setAttribute("user", userName);
-				} else {
-					error = "Wrong UserName or Password";
-				}
-			} catch (SQLException e) {
-				error = "Database error, try again";
-			}
-		}
-		
-		//if an error occurred, the page will be reloaded 
-		if(error != null) {
-			ctx.setVariable("error", error);
-			templateEngine.process("sign-in.html", ctx, response.getWriter());
+		if(userName == null || password == null || userName.isEmpty() || password.isEmpty()) {
+			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);//Code 400
+			response.getWriter().println("Missing parameters");
 			return;
 		}
-			
-		//Redirect to the home page
-		String path = getServletContext().getContextPath() + "/Home";
-		response.sendRedirect(path);
+		//checking if the credentials are right
+		try {
+			if(new UserDAO(this.connection).authentication(userName, password)) {
+				request.getSession(true).setAttribute("user", userName);
+				response.setStatus(HttpServletResponse.SC_OK);//Code 200
+				response.setContentType("application/json");
+				response.setCharacterEncoding("UTF-8");
+				response.getWriter().println(userName);
+			} else {
+				response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);//Code 401
+				response.getWriter().println("Wrong UserName or Password");
+			}
+		} catch (SQLException e) {
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);//Code 500
+			response.getWriter().println("Database error, try again");
+		}
+		
 	}
 	
 	public void destroy() {
