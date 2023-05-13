@@ -6,6 +6,9 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="icon" type="image/x-png" href="images/icon.png">
         <link rel="stylesheet" href="CSS/sign-up.css">
+		<script src="javascript/sign-up.js" charset="UTF-8" defer></script>
+		<script src="javascript/servercall.js" charset="UTF-8" defer></script>
+
         <title>THE PLAYLIST</title>
     </head>
     <body>
@@ -14,7 +17,7 @@
 			<small>
 				We are happy to have you with us.
 			</small>
-			<form action="SignUp" method="post">
+			<form action="#">
 				<div>
 					<label for="userName">UserName</label>
 					<input type="text" class="input-box" id="userName" name="userName" required>
@@ -22,10 +25,10 @@
 				<div>
 					<label for="password">Password</label>
 					<input type="password" id="password" name="password" required>
-					<p th:text="${error}" th:class="error"  class="error"></p>
+					<p  class="error" id="error"></p>
 				</div>
 				<div>
-					<input type="submit" value="Sign Up">
+					<input type="submit" value="Sign Up" id="sign-up">
 				</div>
 			</form>
 			<div class="sign-in">

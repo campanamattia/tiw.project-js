@@ -6,6 +6,9 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
        	<link rel="icon" type="image/x-png" href="images/icon.png">
 		<link rel="stylesheet" href="CSS/sign-in.css">
+		<script src="javascript/sign-in.js" charset="UTF-8" defer></script>
+		<script src="javasxript/servercall.js" charset="UTF-8" defer></script>
+
 		<title>THE PLAYLIST</title>
 	</head>
 	<body>
@@ -14,7 +17,7 @@
 			<small>
 				We are happy to have you back.
 			</small>
-			<form action="SignIn" method="post">
+			<form action="#"">
 				<div>
 					<label for="userName">Username</label>
 					<input type="text" id="userName" name="userName" required>
@@ -22,10 +25,10 @@
 				<div>
 					<label for="password">Password</label>
 					<input type="password" id="password" name="password" required>
-					<p th:class="error" th:text="${error}"></p>
+					<p class="error" id="error"></p>
 				</div>
 				<div>
-					<input type="submit" value="Sign In">
+					<input type="submit" value="SignIn" id="sign-in">
 				</div>
 			</form>
 			<div class="sign-up">
