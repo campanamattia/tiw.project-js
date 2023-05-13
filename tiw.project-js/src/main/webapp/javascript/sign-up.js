@@ -18,7 +18,7 @@
                         let message = req.responseText;
                         if(res.status === 200){
                             sessionStorage.setItem("username", message);
-                            window.location.href = "ThePlaylist.html";
+                            window.location.href = "WEB-INF/ThePlaylist.html";
                         }else{
                             document.getElementById("error").textContent = message;
                         }
