@@ -258,7 +258,7 @@ public class PlaylistDAO {
 	}
 
 	//method that edits the sorting of a playlist
-	public boolean addSorting(String jsonSorting, String playlistName, String userName) throws SQLException{
+	public boolean editSorting(String jsonSorting, String playlistName, String userName) throws SQLException{
 		boolean result = false;
 		String query = "UPDATE PLAYLIST SET Sorting = ? WHERE Name = ? AND UserName = ?";
 		PreparedStatement pStatement = null;
