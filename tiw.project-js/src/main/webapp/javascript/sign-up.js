@@ -13,10 +13,10 @@
                 document.getElementById("error").textContent = "Username or password too long";
                 return;
             }else{
-                makeCall("POST", "SignUp", form, function (req) {
-                    if(req.readyState === XMLHttpRequest.DONE){
+                makeCall("POST", "SignUp", form, function (res) {
+                    if(res.readyState === XMLHttpRequest.DONE){
                         let message = req.responseText;
-                        if(req.status === 200){
+                        if(res.status === 200){
                             sessionStorage.setItem("username", message);
                             window.location.href = "Home.html";
                         }else{
