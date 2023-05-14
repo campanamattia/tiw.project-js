@@ -24,7 +24,7 @@ public class LoggedChecker implements Filter {
 		HttpSession s = req.getSession();
 		if (s.isNew() || s.getAttribute("user") == null) {
 			res.setStatus(HttpServletResponse.SC_FORBIDDEN);//Code 403
-			res.setHeader("Location", signInPath);
+			res.setHeader("location", signInPath);
 			return;
 		}
 		chain.doFilter(request, response);
