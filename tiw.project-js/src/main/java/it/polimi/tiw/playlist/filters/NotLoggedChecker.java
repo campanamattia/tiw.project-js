@@ -19,11 +19,12 @@ public class NotLoggedChecker implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
-		String homePath = req.getServletContext().getContextPath() + "/Home";
+		String homePath = "ThePlaylist.html";
 
 		HttpSession s = req.getSession();
 		if (!s.isNew() && s.getAttribute("user") != null) {
-			res.sendRedirect(homePath);
+			res.setStatus(HttpServletResponse.SC_FORBIDDEN);//Code 403
+			res.setHeader("Location", homePath);
 			return;
 		}
 		chain.doFilter(request, response);

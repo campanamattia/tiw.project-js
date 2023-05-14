@@ -54,12 +54,6 @@ public class EditSortingServlet extends HttpServlet {
 		//checking whether playlistName parameter is valid or not
 		String playlistName = request.getParameter("playlistName");
 		
-		if(playlistName == null || playlistName.isEmpty()) {
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);//Code 400	
-			response.getWriter().println("PlayList not found");
-			return;
-		}
-		
 		try {
 			if( !(playlistDAO.belongTo(playlistName,userName)) ) {
 				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);//Code 400	

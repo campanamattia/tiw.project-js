@@ -50,28 +50,21 @@ public class PlaySongServlet extends HttpServlet{
 		String error = null;
 		
 		String Id = request.getParameter("songId");
-		
-		//Check if songId is valid
-		if(Id.isEmpty() || Id == null) {
-			error = "Song not found";
-		}
 			
 		Integer songId = null;
-		if(error == null) { 
-			try {
-				songId = Integer.parseInt(Id);
-				
-				if( !(songDao.belongTo(songId, userName))) {
-					error = "Song not found";
-				}
-
-			}catch(NumberFormatException e) {
+		try {
+			songId = Integer.parseInt(Id);
+			
+			if( !(songDao.belongTo(songId, userName))) {
 				error = "Song not found";
-			}catch(SQLException e) {
-				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);//Code 500
-				response.getWriter().println("Database error, try again");
-				return;
 			}
+
+		}catch(NumberFormatException e) {
+			error = "Song not found";
+		}catch(SQLException e) {
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);//Code 500
+			response.getWriter().println("Database error, try again");
+			return;
 		}
 		
 		//if an error occurred, it will be shown in the page
