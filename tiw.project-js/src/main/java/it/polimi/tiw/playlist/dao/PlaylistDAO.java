@@ -7,7 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import it.polimi.tiw.playlist.beans.Album;
 import it.polimi.tiw.playlist.beans.Playlist;
+import it.polimi.tiw.playlist.beans.Song;
 import it.polimi.tiw.playlist.utils.FromJsonToArray;
 
 public class PlaylistDAO {
@@ -284,7 +286,8 @@ public class PlaylistDAO {
 		return result;
 	}
 	
-	public ArrayList<Integer> getSorting(String playlistName, String userName) throws SQLException{
+	//method that returns the sorting of the given playlist
+	private ArrayList<Integer> getSorting(String playlistName, String userName) throws SQLException{
 		ArrayList<Integer> result = null;
 		String query = "SELECT Sorting FROM PLAYLIST WHERE Name = ? AND UserName = ?";
 		PreparedStatement pStatement = null;
@@ -328,4 +331,71 @@ public class PlaylistDAO {
 		return result;
 	}
 	
+	//method that returns the necessary attributes for the presentation of the playlist 
+	public ArrayList<Song> getSongTitleAndImg(String playlistName, String userName) throws SQLException{
+		ArrayList<Song> result = new ArrayList<Song>();
+		ArrayList<Song> temp = new ArrayList<Song>();
+		String query = "SELECT SONG.Id, SONG.Title, ALBUM.FileImage "
+				+ "FROM CONTAINS JOIN SONG ON CONTAINS.Song = SONG.Id JOIN ALBUM ON SONG.Album = ALBUM.Id "
+				+ "WHERE CONTAINS.PlaylistName = ? AND CONTAINS.PlaylistUser = ? ORDER BY ALBUM.PublicationYear DESC";
+		PreparedStatement pStatement = null;
+		ResultSet queryRes = null;
+		
+		try {
+			pStatement = con.prepareStatement(query);
+			pStatement.setString(1, playlistName);
+			pStatement.setString(2, userName);
+			
+			queryRes = pStatement.executeQuery();
+			
+			Album album;
+			Song song;
+			//prepare temp with songs ordered by album publication year desc
+			while(queryRes.next()) {
+				album = new Album();
+				song = new Song();
+				
+				//Read the image from the data base
+				song.setId(queryRes.getInt("SONG.Id"));
+				song.setTitle(queryRes.getString("SONG.Title"));
+				album.setFileImage(queryRes.getString("ALBUM.FileImage"));
+				song.setAlbum(album);
+				temp.add(song);
+			}
+			
+			ArrayList<Integer> sorting = getSorting(playlistName,userName);
+			if(sorting == null) result = temp;
+			else {
+				for(Integer i : sorting) {
+					for(Song s : temp) {
+						if(s.getId() == i) result.add(s);
+					}
+				}
+				
+				for(Song s : temp) {
+					if( !result.contains(s) ) result.add(s);
+				}
+			}
+			
+		}catch(SQLException e) {
+			throw new SQLException();
+		}finally {
+			try {
+				if(queryRes != null) {
+					queryRes.close();
+				}
+			}catch(Exception e1) {
+				throw new SQLException(e1);
+			}
+			try {
+				if(pStatement != null) {
+					pStatement.close();
+				}
+			}catch(Exception e2) {
+				throw new SQLException(e2);
+			}
+		}
+		return result;
+	}
+		
 }

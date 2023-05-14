@@ -75,7 +75,8 @@ public class EditPlaylistServlet extends HttpServlet {
 			if(song != null) {
 				Integer tempId = Integer.parseInt(song);
 				if(songDAO.belongTo(tempId, userName) && 
-						songDAO.getSongsNotInPlaylist(playlistName, userName).stream().map(x -> x.getId()).filter(x -> x == tempId).findFirst().isPresent() ) {
+						//check that the song is not already in the playlist 
+						!(playlistDAO.getSongTitleAndImg(playlistName, userName).stream().map(x -> x.getId()).filter(x -> x == tempId).findFirst().isPresent()) ) {
 					songId = tempId;
 				}
 				else error = "Song not found";
