@@ -70,6 +70,7 @@ public class GetSongsInPlaylistServlet extends HttpServlet{
 			}
 		}
 		
+		//if an error occurred, it will be shown in the page
 		if(error != null){
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);//Code 400
 			response.getWriter().println(error);
@@ -93,8 +94,8 @@ public class GetSongsInPlaylistServlet extends HttpServlet{
 		for(Song song : songsInPlaylist) {
 				jSonObject = new JsonObject();
 				
-				jSonObject.addProperty("Id", song.getId());
-				jSonObject.addProperty("Title" , song.getTitle());
+				jSonObject.addProperty("songId", song.getId());
+				jSonObject.addProperty("songTitle" , song.getTitle());
 				jSonObject.addProperty("fileImage" , song.getAlbum().getFileImage());
 				try {
 					jSonObject.addProperty("imageContent" , GetEncoding.getImageEncoding(userName + "_" + song.getAlbum().getFileImage() , getServletContext()));
@@ -105,12 +106,12 @@ public class GetSongsInPlaylistServlet extends HttpServlet{
 				jArray.add(jSonObject);
 		}
 		
-		String songs = new GsonBuilder().create().toJson(jArray);
+		String result = new GsonBuilder().create().toJson(jArray);
 		
 		response.setStatus(HttpServletResponse.SC_OK);//Code 200
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		response.getWriter().println(songs);
+		response.getWriter().println(result);
 	}
 
 	public void destroy() {
