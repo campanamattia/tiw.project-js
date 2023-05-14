@@ -17,21 +17,96 @@
 	</head>
     <body>
         <main>
-			<div id="home-page" class="home-page">
-				<h1 id="title"></h1>
-				<div class="main-container">
-
+			<div id="home-page" class="on">
+				<h1 id="title" class="title"></h1>
+				<p id="error" class="error"></p>
+				<div id="home-container" class="home-container">
+					<div>
+						<h2>Playlists</h2>
+						<p id="playlist-error"></p>
+						<table id="playlist-table" class="vertical">
+							<!--playlis + date of creation-->
+						</table>
+					</div>
+					<div>
+						<h2>Create Playlist</h2>
+						<p id="crp-error" class="error"></p>
+						<p id="crp-message" class="message"></p>
+						<form action="#" id="create-playlist-form">
+							<label for="playlistName">Playlist Name</label>
+							<input type="text" name="playlistName" id="playlistName" required>
+							<input type="submit" id="create-playlist" value="CREATE">
+							<div class="vertical" id="song-checkBox">
+								<!--song checkbox-->
+							</div>
+						</form>
+					</div>
+				</div>
+				<div id="song-form">
+					<h2>Add Song</h2>
+					<p id="song-message" class="message"></p>
+					<p id="song-error" class="error"></p>
+					<form action="#" enctype="multipart/form-data" id="song-form">
+						<label for="songTitle">Song Title</label>
+						<input type="text" name="songTitle" id="songTitle" required>
+						<br>
+						<label for="genre">Genre</label>
+						<input list="genre"  name="genre" required>
+						<datalist id="genre">
+							<option value="Others"></option>
+							<option value="Rap"></option>
+							<option value="Rock"></option>
+							<option value="Jazz"></option>
+							<option value="Pop"></option>
+						</datalist>
+						<br>
+						<label for="fileAudio">Upload Track</label>
+						<input type="file" name="fileAudio" id="fileAudio" accept="audio/mp3, audio/wav" required>
+						<br>
+						<label for="albumTitle">Album Title</label>
+						<input type="text" name="albumTitle" id="albumTitle" required>
+						<br>
+						<label for="singer">Singer</label>
+						<input type="text" name="singer" id="singer" required>
+						<br>
+						<label for="fileImage">Upload Cover</label>
+						<input type="file" name="fileImage" id="fileImage" accept="img/*" required>
+						<br>
+						<label for="year">Release Year</label>
+						<input type="number" name="year" id="year" required>
+						<br>
+						<input type="submit" value="UPLOAD" id="create-song">
+					</form>
 				</div>
 			</div>
-			<div id="playlist-page" class="masked" <!--class="playlist.page"-->>
+			<div id="playlist-page" class="off">
+				<h1 id="title" class="title"></h1>
+				<p id="error" class="error"></p>
+				<div id="playlist-container" class="playlist-container">
+					<div>
+						<h2>Songs</h2>
+						<table id="song-table" class="vertical">
+							<!--song + singer + album + genre + year-->
+						</table>
+					</div>
+					<div>
+						<h2>Add Song</h2>
+						<p id="song-error" class="error"></p>
+						<form action="#" id="add-song-form">
+							<div class="vertical" id="song-checkBox">
+								<!--song checkbox-->
+							</div>
+							<input type="submit" id="add-song" value="ADD">
+						</form>
+					</div>
+				</div>
+			</div>
+
+			<div id="player-page" class="off">
 
 			</div>
 
-			<div id="player-page" class="masked" <!--class="player.page"-->>
-
-			</div>
-
-			<div id="sorting-page" class="masked" <!--class="sorting.page"-->>
+			<div id="sorting-page" class="off">
 
 			</div>
 		</main>
