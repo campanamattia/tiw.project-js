@@ -4,10 +4,12 @@ function Reset() {
     this.resetHomePage = function() {
         let homePage = document.getElementById("home-page");
 
-        //resetting the errors on the home page
-        let errors = homePage.querySelectorAll(".error");
-        errors().forEach(error => {
-            error.innerHTML = "";
+        //resetting the errors and messages on the home page
+        homePage.querySelectorAll(".message").stream().forEach(element => {
+            element.textContent = "";
+        });
+        homePage.querySelector(".error").stream().forEach(element => {
+            element.textContent = "";
         });
 
         //resetting the playlist table
@@ -21,7 +23,8 @@ function Reset() {
     }
 
     this.resetPlaylistPage = function() {
-
+        //lowerBound = 0;
+        
     }
 
     this.resetPlayerPage = function() {

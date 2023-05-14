@@ -137,48 +137,90 @@ function Render(){
         table.innerHTML = "";
         let row = document.createElement("tr");
         //add five sogns or less to the table
-        for (let i = lowerBound; i < songInPlaylist.length && i< lowerBound+5; i++) {
+        var newBlock = function(){
+            lowerBound -= lowerBound%5;
+            if(lowerBound<0) lowerBound = 0;
+            for (let i = lowerBound; i < songInPlaylist.length && i< lowerBound+5; i++) {
             //create a column
-            let column = document.createElement("td");
-            let insideTable = document.createElement("table");
+                let column = document.createElement("td");
+                let insideTable = document.createElement("table");
 
-            //create a row for the image
-            let insideImage = document.createElement("tr");
-            let image = document.createElement("img");
-            image.src = songInPlaylist[i].imageContent;
-            image.className = "image";
-            insideImage.appendChild(image);
-            insideTable.appendChild(insideImage);
+                //create a row for the image
+                let insideImage = document.createElement("tr");
+                let image = document.createElement("img");
+                image.src = songInPlaylist[i].imageContent;
+                image.className = "image";
+                insideImage.appendChild(image);
+                insideTable.appendChild(insideImage);
 
-            //create a row for the name
-            let insideName = document.createElement("tr");
-            let name = document.createTextNode(songInPlaylist[i].name);
+                //create a row for the name
+                let insideTitle = document.createElement("tr");
+                let title = document.createTextNode(songInPlaylist[i].title);
 
-                //add event listener to the song name
-            insideName.addEventListener("click", function() {
-                makeCall("GET", "PlaySong?songName="+name, null, function(res){
-                    if(res.readyState === XMLHttpRequest.DONE){
-                        let message = res.responseText;
-                        if(res.status === 200){
-                            render.playSong(JSON.parse(message));
-                        }else{
-                            document.getElementById("ppt-error").textContent = message; //player playlist table error
+                    //add event listener to the song name
+                insideTitle.addEventListener("click", function() {
+                    makeCall("GET", "PlaySong?songId="+ songInPlaylist[i].id, null, function(res){
+                        if(res.readyState === XMLHttpRequest.DONE){
+                            let message = res.responseText;
+                            if(res.status === 200){
+                                render.playSong(JSON.parse(message));
+                            }else{
+                                playlist.querySelector("#error").textContent = message; //player playlist table error
+                            }
                         }
-                    }
+                    });
                 });
-            });
-            insideName.appendChild(name);
-            insideTable.appendChild(insideName);
+                insideTitle.appendChild(title);
+                insideTable.appendChild(insideTitle);
 
-            //insert the insideTable into the column and the column into the row
-            column.appendChild(insideTable);
-            row.appendChild(column);
-        }
-        //add the row to the table
-        table.appendChild(row);
-        this.lowerBound += 5;
+                //insert the insideTable into the column and the column into the row
+                column.appendChild(insideTable);
+                row.appendChild(column);
+            }
+            //add the row to the table
+            table.appendChild(row);
 
-        //add the buttons
+            //add the buttons
+            let prec = playlist.querySelector("#precButton");
+            let next = playlist.querySelector("#nextButton");
+
+            //set the prec button
+            if(this.lowerBound<=0){
+
+                //if the lower bound is lower than zero then we trun off the prec button
+                prec.className = "off";
+                prec.removeEventListener("click", previousBlock);
+            } else {
+
+                //if the lower bound is greater than zero then we turn on the prec button
+                prec.className = "on";
+                prec.addEventListener("click", previousBlock);
+            }
+
+            //set the next button
+            if(this.lowerBound+5>=songInPlaylist.length){
+
+                //if the lower bound is greater than song In Playlist then we turn off the next button
+                next.className = "off";
+                next.removeEventListener("click", nextBlock);
+            } else {
+
+                //if the lower bound is less than song In Playlist then we turn on the next button
+                next.className = "on";
+                next.addEventListener("click", nextBlock);
+            }
+
+            let previousBlock = function(){
+                this.lowerBound -= 5;
+                newBlock();
+            }
+            let nextBlock = function(){
+                this.lowerBound += 5;
+                newBlock();
+            }
+        }();
+
+        //all the songs the user can add to the playlist
         
     }
 

@@ -31,6 +31,7 @@
 					<div>
 						<h2>Create Playlist</h2>
 						<p id="crp-error" class="error"></p>
+						<p id="crp-message" class="message"></p>
 						<form action="#" id="create-playlist-form">
 							<label for="playlistName">Playlist Name</label>
 							<input type="text" name="playlistName" id="playlistName" required>
@@ -43,6 +44,8 @@
 				</div>
 				<div id="song-form">
 					<h2>Add Song</h2>
+					<p id="song-message" class="message"></p>
+					<p id="song-error" class="error"></p>
 					<form action="#" enctype="multipart/form-data" id="song-form">
 						<label for="songTitle">Song Title</label>
 						<input type="text" name="songTitle" id="songTitle" required>
@@ -88,7 +91,7 @@
 					</div>
 					<div>
 						<h2>Add Song</h2>
-						<p id="asp-error" class="error"></p>
+						<p id="song-error" class="error"></p>
 						<form action="#" id="add-song-form">
 							<div class="vertical" id="song-checkBox">
 								<!--song checkbox-->
