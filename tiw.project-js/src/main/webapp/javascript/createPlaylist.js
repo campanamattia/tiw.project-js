@@ -49,6 +49,7 @@
                         	let date = new Date();
                         	date.setMonth(date.getMonth()+1); // by default is zero based
                         	date = (date.getDay() < 10 ? '0' : '') + date.getDay() + '-' + (date.getMonth() < 10 ? '0' : '') + date.getMonth() + '-' + date.getYear();
+                            listPlaylist.push(new Playlist(playlistName, date));
                         	render.showAllPlaylistList();
                         	break;
                         case 403:
@@ -66,3 +67,10 @@
         }
     });
 })();
+
+class Playlist {
+    constructor(name, date){
+        this.name = name;
+        this.date = date;
+    }
+}
