@@ -1,4 +1,8 @@
 (function() {
+	if(localStorage.getItem("username") !== null){
+		window.location.href = "ThePlaylist.html";
+		return;
+	}
     document.getElementById("sign-up").addEventListener("submit", (event) =>{
         console.log(event.target);
         let form = event.target.closest("form");
@@ -16,12 +20,18 @@
                 makeCall("POST", "SignUp", form, function (res) {
                     if(res.readyState === XMLHttpRequest.DONE){
                         let message = req.responseText;
-                        if(res.status === 200){
-                            sessionStorage.setItem("username", message);
-                            window.location.href = "WEB-INF/ThePlaylist.html";
-                        }else{
-                            document.getElementById("error").textContent = message;
-                        }
+                        switch(req.status){
+						case 200: 
+	                        sessionStorage.setItem("username", message);
+	                        window.location.href = "ThePlaylist.html";
+	                        break;
+	                    case 403:
+							window.sessionStorage.setItem("username",request.getResponseHeader("userName"));
+							window.location.href = request.getResponseHeader("location");
+							break;
+                    	default:
+                        	document.getElementById("error").textContent = message;
+                	}
                     }
                 });
             }

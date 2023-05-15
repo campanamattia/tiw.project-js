@@ -1,4 +1,8 @@
 (function() {
+	if(localStorage.getItem("username") !== null){
+		window.location.href = "ThePlaylist.html";
+		return;
+	}
     document.getElementById("sign-in").addEventListener("submit", (event) =>{
         console.log(event.target);
         let form = event.target.closest("form");
