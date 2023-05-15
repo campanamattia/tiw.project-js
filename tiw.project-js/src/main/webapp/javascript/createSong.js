@@ -17,7 +17,8 @@
 						case 200:
                         	document.getElementById("home-page").querySelector("#song-message").textContent = "Song succesfully uploaded";
                         	listSong = JSON.parse(message);
-                        	render.showCheckBoxSongs(); 
+                        	render.showCheckBoxSongs();
+                        	break;
                         case 403:
 							window.sessionStorage.removeItem("username");
 							window.location.href = request.getResponseHeader("location");

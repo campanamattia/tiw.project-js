@@ -43,7 +43,7 @@ class Render {
             } else
                 render.showAllPlaylistList(home);
             if (listSong === []) {
-                makeCall("GET", "GetSongs", null, function (res) {
+                makeCall("GET", "GetSongList", null, function (res) {
                     if (res.readyState === XMLHttpRequest.DONE) {
                         let message = res.responseText;
                         if (res.status === 200) {
@@ -99,6 +99,7 @@ class Render {
         this.showCheckBoxSongs = function (home) {
 
             let checkbox = home.querySelector("#song-checkbox");
+            checkbox.innerHTML = "";
 
             //add the songs to the checkbox
             for (let i = 0; i < listPlaylist.length; i++) {
