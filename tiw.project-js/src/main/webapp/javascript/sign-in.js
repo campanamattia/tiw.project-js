@@ -10,10 +10,10 @@
         if(form.checkValidity() === true){
             document.getElementById("error").textContent = "";
             
-            makeCall("POST", "SignIn", form, function (res) {
+            makeCall("POST", "/SignIn", form, function (res) {
                 if(res.readyState === XMLHttpRequest.DONE){
                     let message = res.responseText;
-                    switch(req.status){
+                    switch(res.status){
 						case 200: 
 	                        sessionStorage.setItem("username", message);
 	                        window.location.href = "ThePlaylist.html";

@@ -172,10 +172,15 @@ class Render {
                         makeCall("GET", "PlaySong?songId=" + songInPlaylist[i].id, null, function (res) {
                             if (res.readyState === XMLHttpRequest.DONE) {
                                 let message = res.responseText;
-                                if (res.status === 200) {
-                                    render.playSong(songInPlaylist[i], JSON.parse(message));
-                                } else {
-                                    playlist.querySelector("#error").textContent = message; //player playlist table error
+                                switch (res.status) {
+                                    case 200: 
+                                        render.playSong(songInPlaylist[i], JSON.parse(message));
+                                        break;
+                                    case 403:
+                                        window.location.href = request.getResponseHeader("location");
+                                        break;
+                                    default:
+                                        playlist.querySelector("#error").textContent = message; //player playlist table error
                                 }
                             }
                         });

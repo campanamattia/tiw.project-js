@@ -11,7 +11,7 @@
         makeCall("POST", "/EditSorting", null, function(res){
             if(res === XMLHttpRequest.DONE){
                 let message = res.responseText;
-                switch(message){
+                switch(res.satus){
                     case 200:
                         applyNewSort(newSort);
                         break;
