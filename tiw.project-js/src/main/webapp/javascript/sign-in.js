@@ -16,11 +16,11 @@
                     let message = res.responseText;
                     switch(res.status){
 						case 200: 
-	                        sessionStorage.setItem("username", message);
+	                        sessionStorage.setItem("userName", message);
 	                        window.location.href = "ThePlaylist.html";
 	                        break;
 	                    case 403:
-							window.sessionStorage.setItem("username",request.getResponseHeader("userName"));
+							window.sessionStorage.setItem("userName",request.getResponseHeader("userName"));
 							window.location.href = request.getResponseHeader("location");
 							break;
                     	default:

@@ -1,5 +1,5 @@
 
-window.addEventListener("load" , (event) => {
+window.addEventListener("load" , () => {
     if(sessionStorage.getItem("userName") == null){
         window.location.href = "sign-in.html";
     }else{
