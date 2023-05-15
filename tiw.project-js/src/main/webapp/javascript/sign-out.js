@@ -1,6 +1,5 @@
 (function(){
-    document.getElementById("sign-out").addEventListener("click", (event) =>{
-        event.preventDefault();
+    document.getElementById("sign-out").onclick = function(){
         makeCall("POST", 'SignOut', null, function (res) {
             if(res.readyState === XMLHttpRequest.DONE){
                 let message = res.responseText;
@@ -17,5 +16,5 @@
                 }
             }
         });
-    });
+    };
 })();

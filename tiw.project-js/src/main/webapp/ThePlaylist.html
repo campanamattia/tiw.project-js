@@ -6,9 +6,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
        	<link rel="icon" type="image/x-png" href="images/icon.png">
 		<link rel="stylesheet" href="CSS/mystyle.css">
-        <script src="javascript/filter.js"></script>
-		<script src="javasxript/servercall.js" charset="UTF-8" defer></script>
-        <script src="javasxript/render.js" charset="UTF-8" defer></script>
+		<script src="javascript/servercall.js" charset="UTF-8" defer></script>
+        <script src="javascript/render.js" charset="UTF-8" defer></script>
+        <script src="javascript/filter.js" defer></script>
+        <script src="javascript/sign-out.js" defer></script>
+		
 		
 
 
@@ -16,11 +18,9 @@
 		<title>THE PLAYLIST</title>
 	</head>
     <body>
-		<header>
-			<div class="signout-button">
-				<button id="sign-out"></button>
-			</div>
-		</header>
+		<div class="signout-button">
+			<button id="sign-out">SIGN OUT</button>
+		</div>
         <main>
 			<!--HOME PAGE-->
 			<div id="home-page" class="on">
@@ -55,40 +55,42 @@
 
 				<!--Form to upload a Song-->
 				<div id="song-form" class="column-container">
-					<h2>Add Song</h2>
-					<p id="song-message" class="message"></p>
-					<p id="song-error" class="error"></p>
-					<form action="#" enctype="multipart/form-data" id="song-form">
-						<label for="songTitle">Song Title</label>
-						<input type="text" name="songTitle" id="songTitle" required>
-						<br>
-						<label for="genre">Genre</label>
-						<input list="genre"  name="genre" required>
-						<datalist id="genre">
-							<option value="Others"></option>
-							<option value="Rap"></option>
-							<option value="Rock"></option>
-							<option value="Jazz"></option>
-							<option value="Pop"></option>
-						</datalist>
-						<br>
-						<label for="fileAudio">Upload Track</label>
-						<input type="file" name="fileAudio" id="fileAudio" accept="audio/mp3, audio/wav" required>
-						<br>
-						<label for="albumTitle">Album Title</label>
-						<input type="text" name="albumTitle" id="albumTitle" required>
-						<br>
-						<label for="singer">Singer</label>
-						<input type="text" name="singer" id="singer" required>
-						<br>
-						<label for="fileImage">Upload Cover</label>
-						<input type="file" name="fileImage" id="fileImage" accept="img/*" required>
-						<br>
-						<label for="year">Release Year</label>
-						<input type="number" name="year" id="year" required>
-						<br>
-						<input type="submit" value="UPLOAD" id="create-song">
-					</form>
+					<div>
+						<h2>Add Song</h2>
+							<p id="song-message" class="message"></p>
+							<p id="song-error" class="error"></p>
+							<form action="#" enctype="multipart/form-data" id="song-form">
+								<label for="songTitle">Song Title</label>
+								<input type="text" name="songTitle" id="songTitle" required>
+								<br>
+								<label for="genre">Genre</label>
+								<input list="genre"  name="genre" required>
+								<datalist id="genre">
+									<option value="Others"></option>
+									<option value="Rap"></option>
+									<option value="Rock"></option>
+									<option value="Jazz"></option>
+									<option value="Pop"></option>
+								</datalist>
+								<br>
+								<label for="fileAudio">Upload Track</label>
+								<input type="file" name="fileAudio" id="fileAudio" accept="audio/mp3, audio/wav" required>
+								<br>
+								<label for="albumTitle">Album Title</label>
+								<input type="text" name="albumTitle" id="albumTitle" required>
+								<br>
+								<label for="singer">Singer</label>
+								<input type="text" name="singer" id="singer" required>
+								<br>
+								<label for="fileImage">Upload Cover</label>
+								<input type="file" name="fileImage" id="fileImage" accept="img/*" required>
+								<br>
+								<label for="year">Release Year</label>
+								<input type="number" name="year" id="year" required>
+								<br>
+								<input type="submit" value="UPLOAD" id="create-song">
+							</form>
+					</div>
 				</div>
 			</div>
 
