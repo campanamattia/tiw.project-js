@@ -241,11 +241,11 @@ class Render {
             //add the songs to the checkbox
             for (let i = 0; i < songnonInPlaylist.length; i++) {
 
-                //creating the chackbox element
+                //creating the radiobox element
                 let box = document.createElement("input");
                 let label = document.createElement("label");
-                box.type = "roundbox";
-                box.name = "song" + i;
+                box.type = "radio";
+                box.name = "song";
                 label.htmlFor = "song" + i;
                 box.id = "song" + i;
                 box.value = songnonInPlaylist[i].id;
