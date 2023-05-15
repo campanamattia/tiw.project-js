@@ -14,12 +14,12 @@
     text-align: center;
     color: green;
 }
-.signout {
+.signout-button {
     position: fixed;
     top: 10px;
     right: 10px;
 }
-.home {
+.home-button {
     position: fixed;
     top: 10px;
     left: 10px;
@@ -44,4 +44,18 @@
 img{
     height: 100px;
     width: 100px;
+}
+
+.row-container{
+    display: flex;
+    flex-direction: wrap-row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.column-container{
+    display: flex;
+    flex-direction: wrap-column;
+    justify-content: space-between;
+    align-items: center;
 }

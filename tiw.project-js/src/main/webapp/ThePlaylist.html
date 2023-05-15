@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="en">
 	<head>
 		<meta charset="UTF-8">
 		<meta http-equiv="X-UA-Compatible" content="IE=edge">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
        	<link rel="icon" type="image/x-png" href="images/icon.png">
-		<link rel="stylesheet" href="../CSS/style.css">
-        <script src="../javascript/filter.js"></script>
-		<script src="../javasxript/servercall.js" charset="UTF-8" defer></script>
-        <script src="../javasxript/render.js" charset="UTF-8" defer></script>
+		<link rel="stylesheet" href="CSS/mystyle.css">
+        <script src="javascript/filter.js"></script>
+		<script src="javasxript/servercall.js" charset="UTF-8" defer></script>
+        <script src="javasxript/render.js" charset="UTF-8" defer></script>
 		
 
 
@@ -16,11 +16,19 @@
 		<title>THE PLAYLIST</title>
 	</head>
     <body>
+		<header>
+			<div class="signout-button">
+				<button id="sign-out"></button>
+			</div>
+		</header>
         <main>
+			<!--HOME PAGE-->
 			<div id="home-page" class="on">
 				<h1 id="title" class="title"></h1>
 				<p id="error" class="error"></p>
-				<div id="home-container" class="home-container">
+				<div id="home-container" class="row-container">
+
+					<!--User Playlist-->
 					<div>
 						<h2>Playlists</h2>
 						<p id="playlist-error"></p>
@@ -28,6 +36,8 @@
 							<!--playlis + date of creation-->
 						</table>
 					</div>
+
+					<!--Form to create a Playlist-->
 					<div>
 						<h2>Create Playlist</h2>
 						<p id="crp-error" class="error"></p>
@@ -42,7 +52,9 @@
 						</form>
 					</div>
 				</div>
-				<div id="song-form">
+
+				<!--Form to upload a Song-->
+				<div id="song-form" class="column-container">
 					<h2>Add Song</h2>
 					<p id="song-message" class="message"></p>
 					<p id="song-error" class="error"></p>
@@ -79,20 +91,34 @@
 					</form>
 				</div>
 			</div>
+
+
+			<!--PLAYLIST PAGE-->
 			<div id="playlist-page" class="off">
 				<h1 id="title" class="title"></h1>
 				<p id="error" class="error"></p>
-				<div id="playlist-container" class="playlist-container">
+				<p id="message" class="message"></p>
+				<div id="column-container" class="playlist-container">
 					<div>
 						<h2>Songs</h2>
 						<table id="song-table" class="vertical">
 							<!--song + singer + album + genre + year-->
 						</table>
+						<div class="row-container">
+							<div id="precButton">
+								<button type="button">PREC</button>
+							</div>
+							<div id="nextButton">
+								<button type="button">NEXT</button>
+							</div>
+						</div>
 					</div>
 					<div>
-						<h2>Add Song</h2>
+						<h2>Add Song <span><button id="add-song"></button></span></h2>
 						<p id="song-error" class="error"></p>
+
 						<form action="#" id="add-song-form">
+							<input type="hidden" id="playlistName" name="playlistName">
 							<div class="vertical" id="song-checkBox">
 								<!--song checkbox-->
 							</div>
@@ -102,12 +128,18 @@
 				</div>
 			</div>
 
+
+			<!--PLAYER PAGE-->
 			<div id="player-page" class="off">
 
 			</div>
 
-			<div id="sorting-page" class="off">
 
+			<!--SORTING PAGE-->
+			<div id="sorting-page" class="off">
+				<div class="player-container" id="info">
+
+				</div>
 			</div>
 		</main>
     </body>

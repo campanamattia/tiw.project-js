@@ -1,5 +1,5 @@
 (function(){
-    document.getElementById("sign-out").addEventListener("submit", (event) =>{
+    document.getElementById("sign-out").addEventListener("click", (event) =>{
         event.preventDefault();
         makeCall("POST", "SignOut", null, function (res) {
             if(res.readyState === XMLHttpRequest.DONE){
