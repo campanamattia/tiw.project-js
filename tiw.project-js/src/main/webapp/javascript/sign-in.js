@@ -4,6 +4,7 @@
 		return;
 	}
     document.getElementById("sign-in").addEventListener("submit", (event) =>{
+		event.preventDefault();
         console.log(event.target);
         let form = event.target.closest("form");
 
