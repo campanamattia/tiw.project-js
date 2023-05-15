@@ -1,7 +1,7 @@
 (function(){
     document.getElementById("sign-out").addEventListener("click", (event) =>{
         event.preventDefault();
-        makeCall("POST", "SignOut", null, function (res) {
+        makeCall("POST", 'SignOut', null, function (res) {
             if(res.readyState === XMLHttpRequest.DONE){
                 let message = res.responseText;
                 switch(res.status){
@@ -12,6 +12,8 @@
 	                case 403:
 						window.sessionStorage.removeItem("username");
 						window.location.href = request.getResponseHeader("location");
+                    default:
+                        document.getElementById("error").textContent = message;
                 }
             }
         });
