@@ -11,8 +11,8 @@
         if(form.checkValidity() === true){
             document.getElementById("error").textContent = null;
 
-            let userName = from.username.value;
-            let password = from.password.value;
+            let userName = form.userName.value;
+            let password = form.password.value;
 
             if(userName.length > 50 || password.length > 50){
                 document.getElementById("error").textContent = "Username or password too long";
@@ -20,8 +20,8 @@
             }else{
                 makeCall("POST", "SignUp", form, function (res) {
                     if(res.readyState === XMLHttpRequest.DONE){
-                        let message = req.responseText;
-                        switch(req.status){
+                        let message = res.responseText;
+                        switch(res.status){
 						case 200: 
 	                        sessionStorage.setItem("username", message);
 	                        window.location.href = "ThePlaylist.html";
@@ -32,7 +32,7 @@
 							break;
                     	default:
                         	document.getElementById("error").textContent = message;
-                	}
+                		}
                     }
                 });
             }
