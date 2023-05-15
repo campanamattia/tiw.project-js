@@ -18,10 +18,7 @@ public class SignOutServlet extends HttpServlet {
 		//Invalidate session
 		request.getSession(true).invalidate();;
 		
-		//Redirect to the sign in page
-		String path = getServletContext().getContextPath();
-		response.sendRedirect(path);
-
+		response.setStatus(HttpServletResponse.SC_OK);//Code 200
 	}
 	
 	
