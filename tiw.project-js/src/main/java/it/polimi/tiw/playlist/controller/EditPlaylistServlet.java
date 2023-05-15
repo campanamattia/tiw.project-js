@@ -44,26 +44,16 @@ public class EditPlaylistServlet extends HttpServlet {
 		//checking whether playlistName parameter is valid or not
 		String playlistName = request.getParameter("playlistName");
 
-		if(playlistName == null || playlistName.isEmpty()) {
-			error = "Playlist not found";
-		}
-		if(error == null) {
-			try {
-				if( !(playlistDAO.belongTo(playlistName,userName)) ) {
-					error = "Playlist not found";
-				}
-			}
-			catch(SQLException e) {
-				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);//Code 500
-				response.getWriter().println("Database error, try again");
+		try {
+			if( !(playlistDAO.belongTo(playlistName,userName)) ) {
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);//Code 400
+				response.getWriter().println("Playlist not found");
 				return;
 			}
 		}
-		
-		//if an error occurred, it will be shown in the page
-		if(error != null) {
-			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);//Code 400
-			response.getWriter().println(error);
+		catch(SQLException e) {
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);//Code 500
+			response.getWriter().println("Database error, try again");
 			return;
 		}
 		
