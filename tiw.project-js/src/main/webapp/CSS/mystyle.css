@@ -59,3 +59,19 @@ img{
     justify-content: space-between;
     align-items: center;
 }
+
+.title{
+    text-align: center;
+}
+
+.column-container li {
+    cursor: move;
+}
+  
+.column-container li.dragging {
+    opacity: 0.5;
+}
+  
+.column-container li.placeholder {
+    background-color: #f0f0f0;
+}

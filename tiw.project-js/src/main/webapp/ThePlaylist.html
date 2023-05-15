@@ -114,7 +114,7 @@
 						</div>
 					</div>
 					<div>
-						<h2>Add Song <span><button id="add-song"></button></span></h2>
+						<h2 id="modifying"><span><button id="add-song">SUBMIT</button></span></h2>
 						<p id="song-error" class="error"></p>
 
 						<form action="#" id="add-song-form">
@@ -131,15 +131,17 @@
 
 			<!--PLAYER PAGE-->
 			<div id="player-page" class="off">
-
+				<div id="info" class="row-container"></div>
 			</div>
 
 
 			<!--SORTING PAGE-->
 			<div id="sorting-page" class="off">
-				<div class="player-container" id="info">
-
-				</div>
+				<h1 id="title" class="title"><span><button id="update">SAVE CHANGES</button></span></h1>
+				<p id="error" class="error"></p>
+				<ul class="column-container" id="sorting-ul">
+					
+				</ul>
 			</div>
 		</main>
     </body>

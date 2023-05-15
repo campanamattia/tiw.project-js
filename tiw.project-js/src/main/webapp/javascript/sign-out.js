@@ -6,7 +6,7 @@
                 let message = res.responseText;
                 if(res.status === 200){
                     sessionStorage.removeItem("userName");
-                    window.location.href = "../sign-in.html";
+                    window.location.href = "sign-in.html";
                 }else{
                     document.getElementById("logout-error").textContent = message;
                 }
