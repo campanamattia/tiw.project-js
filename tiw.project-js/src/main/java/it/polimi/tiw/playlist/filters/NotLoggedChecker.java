@@ -25,6 +25,7 @@ public class NotLoggedChecker implements Filter {
 		if (!s.isNew() && s.getAttribute("user") != null) {
 			res.setStatus(HttpServletResponse.SC_FORBIDDEN);//Code 403
 			res.setHeader("location", homePath);
+			res.setHeader("userName", (String)s.getAttribute("user"));
 			return;
 		}
 		chain.doFilter(request, response);

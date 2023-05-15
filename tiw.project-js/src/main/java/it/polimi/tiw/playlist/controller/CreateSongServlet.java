@@ -186,7 +186,8 @@ public class CreateSongServlet extends HttpServlet {
 			return;
 		}
 		
-		response.setStatus(HttpServletResponse.SC_OK);//Code 200	
+		String path = getServletContext().getContextPath() + "/GetSongList";
+		getServletContext().getRequestDispatcher(path).forward(request,response);	
 	}
 	
 	public void destroy() {
