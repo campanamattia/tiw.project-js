@@ -15,7 +15,7 @@ class Render {
             //make the home page the only visible page
             document.getElementById("home-page").className = "on";
             document.getElementById("playlist-page").className = "off";
-            documetn.getElementById("player-page").className = "off";
+            document.getElementById("player-page").className = "off";
             document.getElementById("sorting-page").className = "off";
 
             let homeButton = document.getElementById("home-button");
@@ -71,7 +71,7 @@ class Render {
 
         this.showAllPlaylistList = function (home) {
 
-            let table = home.querySelector("playlist-table");
+            let table = home.querySelector("#playlist-table");
             table.innerHTML = "";
 
             for (let i = 0; i < listPlaylist.length; i++) {
@@ -145,7 +145,7 @@ class Render {
             //make the playlist page the only visible page
             document.getElementById("home-page").className = "off";
             document.getElementById("playlist-page").className = "on";
-            documetn.getElementById("player-page").className = "off";
+            document.getElementById("player-page").className = "off";
             document.getElementById("sorting-page").className = "off";
 
             let homeButton = document.getElementById("home-button");
@@ -161,7 +161,7 @@ class Render {
             title.textContent = "Playlist: " + playlistName;
             playlist.querySelector("#playlistName").value = playlistName;
             
-            playlist.querySelector("add-song").textContent = "UPDATE " + playlistName;
+            playlist.querySelector("modifying").textContent = "UPDATE " + playlistName;
 
             //add five sogns or less to the table
             this.updateBlock();
@@ -297,7 +297,7 @@ class Render {
             //make the player page the only visible page
             document.getElementById("home-page").className = "off";
             document.getElementById("playlist-page").className = "off";
-            documetn.getElementById("player-page").className = "on";
+            document.getElementById("player-page").className = "on";
             document.getElementById("sorting-page").className = "off";
 
 			let homeButton = document.getElementById("home-button");
@@ -352,7 +352,7 @@ class Render {
             //make the sorting page the only visible page
             document.getElementById("home-page").className = "off";
             document.getElementById("playlist-page").className = "off";
-            documetn.getElementById("player-page").className = "off";
+            document.getElementById("player-page").className = "off";
             document.getElementById("sorting-page").className = "on";
 
             let homeButton = document.getElementById("home-button");

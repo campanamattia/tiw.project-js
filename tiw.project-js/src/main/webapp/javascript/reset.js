@@ -51,7 +51,7 @@ function Reset() {
         next.onclick = null;
         
         //reset the title in the edit section
-        playlistPage.querySelector("add-song").textContent = "";
+        playlistPage.querySelector("modifying").textContent = "";
         
         //reset the form that adds songs in the playlist
         playlistPage.querySelector("#playlistName").value = "";
