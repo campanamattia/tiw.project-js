@@ -1,5 +1,5 @@
 (function() {
-	if(sessionStorage.getItem("username") !== null){
+	if(sessionStorage.getItem("userName") !== null){
 		window.location.href = "ThePlaylist.html";
 		return;
 	}

@@ -1,5 +1,5 @@
 (function() {
-	if(sessionStorage.getItem("username") !== null){
+	if(sessionStorage.getItem("userName") !== null){
 		window.location.href = "ThePlaylist.html";
 		return;
 	}
@@ -26,7 +26,7 @@
 	                        window.location.href = "ThePlaylist.html";
 	                        break;
 	                    case 403:
-							window.sessionStorage.setItem("username",request.getResponseHeader("userName"));
+							window.sessionStorage.setItem("userName", request.getResponseHeader("userName"));
 							window.location.href = request.getResponseHeader("location");
 							break;
                     	default:
