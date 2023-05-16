@@ -18,6 +18,7 @@
 						case 200:
                         	document.getElementById("home-page").querySelector("#song-message").textContent = "Song succesfully uploaded";
                         	listSong = JSON.parse(message);
+                        	form.reset();
                         	render.showCheckBoxSongs();
                         	break;
                         case 403:
