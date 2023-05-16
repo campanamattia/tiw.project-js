@@ -4,10 +4,10 @@
         let form = e.target;
         if(form.checkValidity() === true){
 			
-			document.getElementById("playlist-page").querySelectorAll(".message").stream().forEach(element => {
+			document.getElementById("playlist-page").querySelectorAll(".message").forEach(element => {
                 element.textContent = "";
             });
-            document.getElementById("playlist-page").querySelector(".error").stream().forEach(element => {
+            document.getElementById("playlist-page").querySelector(".error").forEach(element => {
                 element.textContent = "";
             });
             

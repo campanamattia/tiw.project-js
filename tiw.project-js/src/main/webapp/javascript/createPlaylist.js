@@ -5,10 +5,10 @@
         
         if (form.checkValidity() === true) {
 			
-			document.getElementById("home-page").querySelectorAll(".message").stream().forEach(element => {
+			document.getElementById("home-page").querySelectorAll(".message").forEach(element => {
                 element.textContent = "";
             });
-            document.getElementById("home-page").querySelector(".error").stream().forEach(element => {
+            document.getElementById("home-page").querySelector(".error").forEach(element => {
                 element.textContent = "";
             });
 			

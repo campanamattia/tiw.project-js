@@ -8,10 +8,10 @@ function Reset() {
         home.querySelector("#title").textContent = "";
 
         //reset errors and messages
-        homePage.querySelectorAll(".message").stream().forEach(element => {
+        homePage.querySelectorAll(".message").forEach(element => {
             element.textContent = "";
         });
-        homePage.querySelector(".error").stream().forEach(element => {
+        homePage.querySelector(".error").forEach(element => {
             element.textContent = "";
         });
 
@@ -32,10 +32,10 @@ function Reset() {
         playlistPage.querySelector("#title").textContent = "";
         
         //reset errors and messages
-        playlistPage.querySelectorAll(".message").stream().forEach(element => {
+        playlistPage.querySelectorAll(".message").forEach(element => {
             element.textContent = "";
         });
-        playlistPage.querySelector(".error").stream().forEach(element => {
+        playlistPage.querySelector(".error").forEach(element => {
             element.textContent = "";
         });
         
