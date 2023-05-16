@@ -22,7 +22,7 @@
                         let message = res.responseText;
                         switch(res.status){
 						case 200: 
-	                        sessionStorage.setItem("username", message);
+	                        sessionStorage.setItem("userName", message);
 	                        window.location.href = "ThePlaylist.html";
 	                        break;
 	                    case 403:
