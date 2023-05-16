@@ -1,6 +1,7 @@
 (function() {
-    document.getElementById("create-playlist").addEventListener("submit", (event) => {
-        let form = event.target.closest("form");
+    document.getElementById("create-playlist-form").addEventListener("submit", (e) => {
+		e.preventDefault();
+        let form = e.target;
         
         if (form.checkValidity() === true) {
 			
@@ -62,12 +63,12 @@
                         	document.getElementById("home-page").querySelector("#crp-error").textContent = message;
                     }
                 }
-            });
+            }, null, false);
 
         } else {
             form.reportValidity();
         }
-    }, null, false);
+    }, false);
 })();
 
 class Playlist {

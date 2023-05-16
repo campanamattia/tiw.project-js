@@ -1,5 +1,6 @@
 (function(){
-    document.getElementById("sign-out").onclick = function(){
+    document.getElementById("sign-out").addEventListener("click", (e) => {
+		e.preventDefault();
         makeCall("GET", 'SignOut', null, function (res) {
             if(res.readyState === XMLHttpRequest.DONE){
                 let message = res.responseText;
@@ -15,6 +16,6 @@
                         document.getElementById("error").textContent = message;
                 }
             }
-        });
-    };
+        }, null, false);
+    },false);
 })();

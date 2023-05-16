@@ -1,6 +1,7 @@
 (function() {
-    document.getElementById("create-song").addEventListener("submit", (event) => {
-        let form = event.target.closest("form");
+    document.getElementById("song-form").addEventListener("submit", (e) => {
+		e.preventDefault();
+        let form = e.target;
         if (form.checkValidity() === true) {
 
             document.getElementById("home-page").querySelectorAll(".message").stream().forEach(element => {
@@ -27,10 +28,10 @@
                         	document.getElementById("home-page").querySelector("#song-error").textContent = message;
                     }
                 }
-            });
+            }, null, false);
 
         } else {
             form.reportValidity();
         }
-    });
+    },false);
 })();

@@ -3,9 +3,9 @@
 		window.location.href = "ThePlaylist.html";
 		return;
 	}
-    document.getElementById("sign-up").addEventListener("submit", (event) =>{
-        event.preventDefault();
-        let form = event.target.closest("form");
+    document.getElementById("sign-up").addEventListener("submit", (e) =>{
+        e.preventDefault();
+        let form = e.target;
 
         if(form.checkValidity() === true){
             document.getElementById("error").textContent = null;
@@ -33,10 +33,10 @@
                         	document.getElementById("error").textContent = message;
                 		}
                     }
-                });
+                }, null, false);
             }
         }else{  
             form.reportValidity();
         }
-    });
+    }, false);
 })();
