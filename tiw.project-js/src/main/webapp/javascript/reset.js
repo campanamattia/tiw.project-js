@@ -11,7 +11,7 @@ function Reset() {
         homePage.querySelectorAll(".message").forEach(element => {
             element.textContent = "";
         });
-        homePage.querySelector(".error").forEach(element => {
+        homePage.querySelectorAll(".error").forEach(element => {
             element.textContent = "";
         });
 
@@ -35,7 +35,7 @@ function Reset() {
         playlistPage.querySelectorAll(".message").forEach(element => {
             element.textContent = "";
         });
-        playlistPage.querySelector(".error").forEach(element => {
+        playlistPage.querySelectorAll(".error").forEach(element => {
             element.textContent = "";
         });
         

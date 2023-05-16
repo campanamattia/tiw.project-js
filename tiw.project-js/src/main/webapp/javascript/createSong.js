@@ -7,7 +7,7 @@
             document.getElementById("home-page").querySelectorAll(".message").forEach(element => {
                 element.textContent = "";
             });
-            document.getElementById("home-page").querySelector(".error").forEach(element => {
+            document.getElementById("home-page").querySelectorAll(".error").forEach(element => {
                 element.textContent = "";
             });
 

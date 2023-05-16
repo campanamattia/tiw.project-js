@@ -7,7 +7,7 @@
 			document.getElementById("playlist-page").querySelectorAll(".message").forEach(element => {
                 element.textContent = "";
             });
-            document.getElementById("playlist-page").querySelector(".error").forEach(element => {
+            document.getElementById("playlist-page").querySelectorAll(".error").forEach(element => {
                 element.textContent = "";
             });
             
