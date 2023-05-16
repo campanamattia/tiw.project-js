@@ -5,7 +5,6 @@
 	}
     document.getElementById("sign-up").addEventListener("submit", (event) =>{
         event.preventDefault();
-        console.log(event.target);
         let form = event.target.closest("form");
 
         if(form.checkValidity() === true){

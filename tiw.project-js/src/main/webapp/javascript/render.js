@@ -349,7 +349,7 @@ class Render {
            }
         };
 
-        this.reset() = function () {
+        this.reset = function () {
             reset.resetHomePage();
             reset.resetPlaylistPage();
             reset.resetPlayerPage();
