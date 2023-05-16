@@ -55,7 +55,7 @@
                         	render.showAllPlaylistList();
                         	break;
                         case 403:
-							window.sessionStorage.removeItem("username");
+							window.sessionStorage.removeItem("userName");
 							window.location.href = request.getResponseHeader("location");
 							break;
                     	default:

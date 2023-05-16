@@ -4,7 +4,7 @@ var listSong = [];
 
 //for playlist and sorting page use
 var lowerBound = 0;
-var songInPlaylist = [];
+var songsInPlaylist = [];
 
 
 class Render {
@@ -71,7 +71,7 @@ class Render {
 
                 //add event listener to the playlist name
                 columnName.onclick=function () {
-                    makeCall("GET", "GetSongInPlaylist?playlistName=" + playlistName, null, function (res) {
+                    makeCall("GET", "GetSongsInPlaylist?playlistName=" + playlistName, null, function (res) {
                         if (res.readyState === XMLHttpRequest.DONE) {
                             let message = res.responseText;
                             if (res.status === 200) {
@@ -120,7 +120,7 @@ class Render {
 
         };
 
-        this.showPlaylistPage = function (playlistName, songInPlaylist) {
+        this.showPlaylistPage = function (playlistName, songsInPlaylist) {
             //resetting the document
             this.reset();
 
@@ -136,6 +136,7 @@ class Render {
             let playlist = document.getElementById("playlist-page");
             let title = playlist.querySelector("#title");
             title.textContent = "Playlist: " + playlistName;
+            playlist.querySelector("#playlistName").value = playlistName;
             
             playlist.querySelector("add-song").textContent= "UPDATE " + playlistName;
 
@@ -149,7 +150,7 @@ class Render {
                     lowerBound = 0;
                 else lowerBound -= lowerBound % 5;
                 
-                for (let i = lowerBound; i < songInPlaylist.length && i < lowerBound + 5; i++) {
+                for (let i = lowerBound; i < songsInPlaylist.length && i < lowerBound + 5; i++) {
                     //create a column
                     let column = document.createElement("td");
                     let insideTable = document.createElement("table");
@@ -157,24 +158,24 @@ class Render {
                     //create a row for the image
                     let insideImage = document.createElement("tr");
                     let image = document.createElement("img");
-                    image.src = songInPlaylist[i].imageContent;
+                    image.src = songsInPlaylist[i].imageContent;
                     insideImage.appendChild(image);
                     insideTable.appendChild(insideImage);
 
                     //create a row for the name
                     let insideTitle = document.createElement("tr");
-                    let title = document.createTextNode(songInPlaylist[i].title);
+                    let title = document.createTextNode(songsInPlaylist[i].title);
                     insideTitle.appendChild(title);
                     insideTable.appendChild(insideTitle);
 
                     //add event listener to the song name
                     insideTitle.onclick= function () {
-                        makeCall("GET", "PlaySong?songId=" + songInPlaylist[i].id, null, function (res) {
+                        makeCall("GET", "PlaySong?songId=" + songsInPlaylist[i].id, null, function (res) {
                             if (res.readyState === XMLHttpRequest.DONE) {
                                 let message = res.responseText;
                                 switch (res.status) {
                                     case 200: 
-                                        render.playSong(songInPlaylist[i], JSON.parse(message));
+                                        render.playSong(songsInPlaylist[i], JSON.parse(message));
                                         break;
                                     case 403:
                                         window.location.href = request.getResponseHeader("location");
@@ -211,7 +212,7 @@ class Render {
                 }
 
                 //set the next button
-                if (lowerBound + 5 >= songInPlaylist.length) {
+                if (lowerBound + 5 >= songsInPlaylist.length) {
 
                     //if the lower bound is greater than song In Playlist then we turn off the next button
                     next.className = "off";
@@ -236,14 +237,14 @@ class Render {
             //all the songs the user can add to the playlist
             let songRoundBox = playlist.querySelector("#song-roundbox");
 
-            let songnonInPlaylist = [...listSong];
+            let songsNotInPlaylist = [...listSong];
 
-            songnonInPlaylist = songnonInPlaylist.filter(songNot => {
-            return !songInPlaylist.some(songIn => songIn.id === songNot.id);
+            songsNotInPlaylist = songsNotInPlaylist.filter((songNot) => {
+            return !songsInPlaylist.some(songIn => songIn.id === songNot.id);
             });
 
             //add the songs to the checkbox
-            for (let i = 0; i < songnonInPlaylist.length; i++) {
+            for (let i = 0; i < songsNotInPlaylist.length; i++) {
 
                 //creating the radiobox element
                 let box = document.createElement("input");
@@ -252,8 +253,8 @@ class Render {
                 box.name = "song";
                 label.htmlFor = "song" + i;
                 box.id = "song" + i;
-                box.value = songnonInPlaylist[i].id;
-                label.textContent = songnonInPlaylist[i].name;
+                box.value = songsNotInPlaylist[i].id;
+                label.textContent = songsNotInPlaylist[i].name;
 
                 //adding the song to the checkbox
                 songRoundBox.appendChild(label);
@@ -331,19 +332,19 @@ class Render {
                 pushNewSorting();
             };
 
-            for(let i = 0; i<songInPlaylist.length; i++){
+            for(let i = 0; i<songsInPlaylist.length; i++){
                 let li = document.createElement("li");
-                li.textContent = songInPlaylist[i].name;
-                li.id = songInPlaylist[i].id;
+                li.textContent = songsInPlaylist[i].name;
+                li.id = songsInPlaylist[i].id;
                 li.draggable = true;
 
             }
             
            let list = sortingPage.querySelector("#sorting-ul");
-           for(let i = 0; i<songInPlaylist; i++){
+           for(let i = 0; i<songsInPlaylist; i++){
                 let li = document.createElement("li");
-                li.textContent = songInPlaylist[i].name;
-                li.id = songInPlaylist[i].id;
+                li.textContent = songsInPlaylist[i].name;
+                li.id = songsInPlaylist[i].id;
                 li.draggable = true;
                 list.appendChild(li);
            }
@@ -360,8 +361,8 @@ class Render {
 
 var render = new Render();
 
-songInPlaylist.getSong = function (songId) {
-    for(let i = 0; i < songInPlaylist.length; i++)
-        if(songInPlaylist[i].id === songId)
-            return songInPlaylist[i];
+songsInPlaylist.getSong = function (songId) {
+    for(let i = 0; i < songsInPlaylist.length; i++)
+        if(songsInPlaylist[i].id === songId)
+            return songsInPlaylist[i];
 };
