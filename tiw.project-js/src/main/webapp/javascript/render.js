@@ -138,7 +138,7 @@ class Render {
             title.textContent = "Playlist: " + playlistName;
             playlist.querySelector("#playlistName").value = playlistName;
             
-            playlist.querySelector("add-song").textContent= "UPDATE " + playlistName;
+            playlist.querySelector("add-song").textContent = "UPDATE " + playlistName;
 
             let table = document.getElementById("song-table");
             //empty the table
@@ -331,14 +331,6 @@ class Render {
             sortingPage.querySelector("#update").onclick = function (){
                 pushNewSorting();
             };
-
-            for(let i = 0; i<songsInPlaylist.length; i++){
-                let li = document.createElement("li");
-                li.textContent = songsInPlaylist[i].name;
-                li.id = songsInPlaylist[i].id;
-                li.draggable = true;
-
-            }
             
            let list = sortingPage.querySelector("#sorting-ul");
            for(let i = 0; i<songsInPlaylist; i++){
