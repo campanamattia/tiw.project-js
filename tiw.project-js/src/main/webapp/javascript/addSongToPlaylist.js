@@ -37,7 +37,9 @@
 						case 200:
                         	document.getElementById("playlist-page").querySelector("#message").textContent = "Song succesfully added to the playlist";
                         	songsInPlaylist = JSON.parse(message);
-                        	render.showPlaylistPage();
+                        	lowerBound = 0;
+                        	render.updateBlock();
+                        	render.showSongsNotInPlaylist();
                         	break;
                         case 403:
 							window.sessionStorage.removeItem("userName");

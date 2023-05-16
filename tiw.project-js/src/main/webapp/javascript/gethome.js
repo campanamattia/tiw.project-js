@@ -1,6 +1,4 @@
-var goHome = function (){
-	document.getElementById("home-button").onclick = function(e){
+var goHome = function (e){
 		e.preventDefault();
 		render.showHomePage();
-	};
 };

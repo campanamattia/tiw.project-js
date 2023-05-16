@@ -49,6 +49,11 @@ public class GetSongListServlet extends HttpServlet {
 				
 		try {
 			songs = new SongDAO(this.connection).getSongsbyUser(userName);
+			if(songs == null || songs.isEmpty()) {
+				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);//Code 400
+				response.getWriter().println("You have no songs saved");
+				return;
+			}
 		}catch(SQLException e) {
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);//Code 500
 			response.getWriter().println("Database error, try again");

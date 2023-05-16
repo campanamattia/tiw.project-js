@@ -3,11 +3,6 @@ var reset = new Reset();
 function Reset() {
     this.resetHomePage = function() {
         let homePage = document.getElementById("home-page");
-        let homeButton = document.getElementById("home-button");
-        
-        //reset the home button
-        homeButton.className = "off";
-        homeButton.onclick = null;
         
         //reset the title
         home.querySelector("#title").textContent = "";
