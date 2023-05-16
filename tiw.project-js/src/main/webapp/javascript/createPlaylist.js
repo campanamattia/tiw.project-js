@@ -45,6 +45,7 @@
                     let message = res.responseText;
                     switch (res.status) {
 						case 200:
+							form.reset();
                         	document.getElementById("home-page").querySelector("#crp-message").textContent = "Playlist succesfully Created";
                         	let date = new Date();
                         	date.setMonth(date.getMonth()+1); // by default is zero based
@@ -57,6 +58,7 @@
 							window.location.href = request.getResponseHeader("location");
 							break;
                     	default:
+							form.name.value = "";
                         	document.getElementById("home-page").querySelector("#crp-error").textContent = message;
                     }
                 }
@@ -65,7 +67,7 @@
         } else {
             form.reportValidity();
         }
-    });
+    }, null, false);
 })();
 
 class Playlist {
