@@ -1,6 +1,6 @@
 var goHome = function (){
-	document.getElementById("home-button").addEventListener("click", (e) => {
+	document.getElementById("home-button").onclick = function(e){
 		e.preventDefault();
 		render.showHomePage();
-	},false);
+	};
 };
