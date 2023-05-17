@@ -35,15 +35,33 @@
                     let message = res.responseText;
                     switch (res.status) {
 						case 200:
-                        	document.getElementById("playlist-page").querySelector("#message").textContent = "Song succesfully added to the playlist";
-                        	songsInPlaylist = JSON.parse(message);
-                        	lowerBound = 0;
-                        	render.updateBlock();
-                        	render.showSongsNotInPlaylist();
+							
+                        	let playlistName = form.querySelector("#playlistName").value;
+                        	makeCall("GET", "GetSongsInPlaylist?playlistName=" + playlistName, null, function (res1) {
+		                        if (res1.readyState === XMLHttpRequest.DONE) {
+		                            let message1 = res1.responseText;
+		                            switch (res1.status) {
+										case 200:
+											document.getElementById("playlist-page").querySelector("#message").textContent = "Song succesfully added to the playlist";
+                        					lowerBound = 0;
+											songsInPlaylist = JSON.parse(message1);
+			                                render.updateBlock();
+                        					render.showSongsNotInPlaylist();
+			                                break;
+			                            case 403:
+											window.sessionStorage.removeItem("userName");
+											window.location.href = res1.getResponseHeader("location");
+											break;
+		                            default:
+		                                home.querySelector("#error").textContent = message1; //error
+		                            }
+		                        }
+		                    }, null, false);
+		                        	
                         	break;
                         case 403:
 							window.sessionStorage.removeItem("userName");
-							window.location.href = request.getResponseHeader("location");
+							window.location.href = res.getResponseHeader("location");
 							break;
                     	default:
                         	document.getElementById("playlist-page").querySelector("#song-error").textContent = message;

@@ -102,8 +102,7 @@ public class EditPlaylistServlet extends HttpServlet {
 			return;
 		}
 		
-		String path = getServletContext().getContextPath() + "/GetSongsInPlaylist";
-		getServletContext().getRequestDispatcher(path).forward(request,response);	
+		response.setStatus(HttpServletResponse.SC_OK);//Code 200
 	}
 	
 	public void destroy() {

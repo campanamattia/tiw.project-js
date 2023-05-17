@@ -56,7 +56,7 @@
                         	break;
                         case 403:
 							window.sessionStorage.removeItem("userName");
-							window.location.href = request.getResponseHeader("location");
+							window.location.href = res.getResponseHeader("location");
 							break;
                     	default:
 							form.name.value = "";
