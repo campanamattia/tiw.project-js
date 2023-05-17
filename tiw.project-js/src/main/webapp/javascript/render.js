@@ -9,66 +9,30 @@ var songsInPlaylist = [];
 
 class Render {
     constructor() {
+		
+		this.showCheckBoxSongs = function () {
+			let home = document.getElementById("home-page");
+            let checkbox = home.querySelector("#song-checkbox");
+            checkbox.innerHTML = "";
+            //add the songs to the checkbox
+            for (let i = 0; i < listPlaylist.length; i++) {
+                //creating the chackbox element
+                let box = document.createElement("input");
+                let label = document.createElement("label");
+                box.type = "checkbox";
+                box.name = "song" + i;
+                label.htmlFor = "song" + i;
+                box.id = "song" + i;
+                box.value = listPlaylist[i].id;
+                label.textContent = listPlaylist[i].name;
 
-        this.showHomePage = function () {
+                //adding the song to the checkbox
+                checkbox.appendChild(label);
+                checkbox.appendChild(box);
+            }
 
-            //make the home page the only visible page
-            document.getElementById("home-page").className = "on";
-            document.getElementById("playlist-page").className = "off";
-            document.getElementById("player-page").className = "off";
-            document.getElementById("sorting-page").className = "off";
-
-            let homeButton = document.getElementById("home-button");
-            homeButton.className = "off";
-            homeButton.onclick = null;
-
-            //writing the welcome message
-            let home = document.getElementById("home-page");
-            let title = home.querySelector("#title");
-            title.textContent = "Welcome back " + sessionStorage.getItem("userName");
-
-            if (listPlaylist === []) {
-                makeCall("GET", "GetPlaylistList", null, function (res) {
-                    if (res.readyState === XMLHttpRequest.DONE) {
-                        let message = res.responseText;
-                        switch (res.status) {
-							case 200:
-	                            listPlaylist = JSON.parse(message);
-	                            this.showAllPlaylistList();
-	                            break;
-	                        case 403:
-								window.sessionStorage.removeItem("userName");
-								window.location.href = res.getResponseHeader("location");
-								break;
-                        	default:
-                            home.querySelector("#playlist-error").textContent = message; //playlist list error
-                        }
-                    }
-                }, null, false);
-            } else
-                this.showAllPlaylistList();
-            if (listSong === []) {
-                makeCall("GET", "GetSongList", null, function (res) {
-                    if (res.readyState === XMLHttpRequest.DONE) {
-                        let message = res.responseText;
-                        switch (res.status) {
-							case 200:
-	                            listSong = JSON.parse(message);
-	                            this.showCheckBoxSongs();
-	                            break;
-	                        case 403:
-								window.sessionStorage.removeItem("userName");
-								window.location.href = res.getResponseHeader("location");
-								break;
-                        	default:
-                            	home.querySelector("#songlist-error").textContent = message; //song list error
-                        }
-                    }
-                }, null, false);
-            } else
-                this.showCheckBoxSongs();
         };
-
+        
         this.showAllPlaylistList = function () {
 			let home = document.getElementById("home-page");
             let table = home.querySelector("#playlist-table");
@@ -115,58 +79,65 @@ class Render {
             }
         };
 
+        this.showHomePage = function () {
 
-        this.showCheckBoxSongs = function () {
-			let home = document.getElementById("home-page");
-            let checkbox = home.querySelector("#song-checkbox");
-            checkbox.innerHTML = "";
-
-            //add the songs to the checkbox
-            for (let i = 0; i < listPlaylist.length; i++) {
-                //creating the chackbox element
-                let box = document.createElement("input");
-                let label = document.createElement("label");
-                box.type = "checkbox";
-                box.name = "song" + i;
-                label.htmlFor = "song" + i;
-                box.id = "song" + i;
-                box.value = listPlaylist[i].id;
-                label.textContent = listPlaylist[i].name;
-
-                //adding the song to the checkbox
-                checkbox.appendChild(label);
-                checkbox.appendChild(box);
-            }
-
-        };
-
-        this.showPlaylistPage = function (playlistName) {
-
-            //make the playlist page the only visible page
-            document.getElementById("home-page").className = "off";
-            document.getElementById("playlist-page").className = "on";
+            //make the home page the only visible page
+            document.getElementById("home-page").className = "on";
+            document.getElementById("playlist-page").className = "off";
             document.getElementById("player-page").className = "off";
             document.getElementById("sorting-page").className = "off";
 
             let homeButton = document.getElementById("home-button");
-            homeButton.className = "on";
-            homeButton.onclick = function(e){
-									reset.resetPlaylistPage();
-									goHome(e);
-								 }
+            homeButton.className = "off";
+            homeButton.onclick = null;
 
-            //show the playlist name
-            let playlist = document.getElementById("playlist-page");
-            let title = playlist.querySelector("#title");
-            title.textContent = "Playlist: " + playlistName;
-            playlist.querySelector("#playlistName").value = playlistName;
-            
-            playlist.querySelector("modifying").textContent = "UPDATE " + playlistName;
+            //writing the welcome message
+            let home = document.getElementById("home-page");
+            let title = home.querySelector("#title");
+            title.textContent = "Welcome back " + sessionStorage.getItem("userName");
 
-            //add five sogns or less to the table
-            this.updateBlock();
-
-            this.showSongsNotInPlaylist();
+            if (listPlaylist.length === 0) {
+                makeCall("GET", "GetPlaylistList", null, function (res) {
+                    if (res.readyState === XMLHttpRequest.DONE) {
+                        let message = res.responseText;
+                        switch (res.status) {
+							case 200:
+	                            listPlaylist = JSON.parse(message);
+	                            this.showAllPlaylistList();
+	                            break;
+	                        case 403:
+								window.sessionStorage.removeItem("userName");
+								window.location.href = res.getResponseHeader("location");
+								break;
+                        	default:
+                            home.querySelector("#playlist-error").textContent = message; //playlist list error
+                        }
+                    }
+                }, null, false);
+            } else{
+				this.showAllPlaylistList();
+			}   
+            if (listSong.length === 0) {
+                makeCall("GET", "GetSongList", null, function (res) {
+                    if (res.readyState === XMLHttpRequest.DONE) {
+                        let message = res.responseText;
+                        switch (res.status) {
+							case 200:
+	                            listSong = JSON.parse(message);
+	                            this.showCheckBoxSongs();
+	                            break;
+	                        case 403:
+								window.sessionStorage.removeItem("userName");
+								window.location.href = res.getResponseHeader("location");
+								break;
+                        	default:
+                            	home.querySelector("#songlist-error").textContent = message; //song list error
+                        }
+                    }
+                }, null, false);
+            } else{
+				this.showCheckBoxSongs();
+			}   
         };
         
         this.updateBlock = function () {
@@ -291,6 +262,35 @@ class Render {
                 songRoundBox.appendChild(box);
             }
 		};
+
+        this.showPlaylistPage = function (playlistName) {
+
+            //make the playlist page the only visible page
+            document.getElementById("home-page").className = "off";
+            document.getElementById("playlist-page").className = "on";
+            document.getElementById("player-page").className = "off";
+            document.getElementById("sorting-page").className = "off";
+
+            let homeButton = document.getElementById("home-button");
+            homeButton.className = "on";
+            homeButton.onclick = function(e){
+									reset.resetPlaylistPage();
+									goHome(e);
+								 }
+
+            //show the playlist name
+            let playlist = document.getElementById("playlist-page");
+            let title = playlist.querySelector("#title");
+            title.textContent = "Playlist: " + playlistName;
+            playlist.querySelector("#playlistName").value = playlistName;
+            
+            playlist.querySelector("modifying").textContent = "UPDATE " + playlistName;
+
+            //add five sogns or less to the table
+            this.updateBlock();
+
+            this.showSongsNotInPlaylist();
+        };
 
         this.playSong = function (song, details) {
 
