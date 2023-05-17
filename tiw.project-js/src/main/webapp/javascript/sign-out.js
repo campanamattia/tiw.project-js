@@ -6,7 +6,9 @@
                 let message = res.responseText;
                 switch(res.status){
 					case 200:
-	                    sessionStorage.removeItem("userName");
+	                    sessionStorage.clear();
+                        //localStorage.clear();
+                        //do we need to reset all the variables?
 	                    window.location.href = "sign-in.html";
 	                    break;
 	                case 403:
