@@ -34,7 +34,7 @@ class Render {
                         switch (res.status) {
 							case 200:
 	                            listPlaylist = JSON.parse(message);
-	                            this.showAllPlaylistList(home);
+	                            this.showAllPlaylistList();
 	                            break;
 	                        case 403:
 								window.sessionStorage.removeItem("userName");
@@ -46,7 +46,7 @@ class Render {
                     }
                 }, null, false);
             } else
-                this.showAllPlaylistList(home);
+                this.showAllPlaylistList();
             if (listSong === []) {
                 makeCall("GET", "GetSongList", null, function (res) {
                     if (res.readyState === XMLHttpRequest.DONE) {
@@ -54,7 +54,7 @@ class Render {
                         switch (res.status) {
 							case 200:
 	                            listSong = JSON.parse(message);
-	                            this.showCheckBoxSongs(home);
+	                            this.showCheckBoxSongs();
 	                            break;
 	                        case 403:
 								window.sessionStorage.removeItem("userName");
@@ -66,11 +66,11 @@ class Render {
                     }
                 }, null, false);
             } else
-                this.showCheckBoxSongs(home);
+                this.showCheckBoxSongs();
         };
 
-        this.showAllPlaylistList = function (home) {
-
+        this.showAllPlaylistList = function () {
+			let home = document.getElementById("home-page");
             let table = home.querySelector("#playlist-table");
             table.innerHTML = "";
 
@@ -116,8 +116,8 @@ class Render {
         };
 
 
-        this.showCheckBoxSongs = function (home) {
-
+        this.showCheckBoxSongs = function () {
+			let home = document.getElementById("home-page");
             let checkbox = home.querySelector("#song-checkbox");
             checkbox.innerHTML = "";
 
