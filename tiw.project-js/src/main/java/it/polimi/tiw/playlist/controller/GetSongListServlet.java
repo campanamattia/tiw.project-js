@@ -66,7 +66,7 @@ public class GetSongListServlet extends HttpServlet {
 		response.setStatus(HttpServletResponse.SC_OK);//Code 200		
 		response.setContentType("application/json");
 		response.setCharacterEncoding("UTF-8");
-		response.getWriter().write(jSon);
+		response.getWriter().println(jSon);
 	}	
 	
 	public void destroy() {
