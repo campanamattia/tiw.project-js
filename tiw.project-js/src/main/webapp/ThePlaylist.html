@@ -42,11 +42,11 @@
 					<!--User Playlist-->
 					<div>
 						<h2>Playlists</h2>
-						<p id="playlist-error"></p>
+						<p id="playlist-error" class="error"></p>
 						<table id="playlist-table" class="vertical">
 							<!--playlis + date of creation-->
 						</table>
-					</div>
+					</div> 
 
 					<!--Form to create a Playlist-->
 					<div>
@@ -57,6 +57,7 @@
 							<label for="playlistName">Playlist Name</label>
 							<input type="text" name="playlistName" id="playlistName" required>
 							<input type="submit" id="create-playlist" value="CREATE">
+							<p id="get-songs-error" class="error"></p>
 							<div class="vertical" id="song-checkbox">
 								<!--song checkbox-->
 							</div>

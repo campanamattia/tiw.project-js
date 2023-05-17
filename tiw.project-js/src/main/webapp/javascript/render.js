@@ -131,7 +131,7 @@ class Render {
 								window.location.href = res.getResponseHeader("location");
 								break;
                         	default:
-                            	home.querySelector("#songlist-error").textContent = message; //song list error
+                            	home.querySelector("#get-songs-error").textContent = message; //song list error
                         }
                     }
                 }, null, false);

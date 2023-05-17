@@ -32,7 +32,7 @@
 										window.location.href = res1.getResponseHeader("location");
 										break;
 		                        	default:
-		                            	home.querySelector("#songlist-error").textContent = message1; //song list error
+		                            	document.getElementById("home-page").querySelector("#get-songs-error").textContent = message1; //song list error
 		                        }
 		                    }
 		                }, null, false);

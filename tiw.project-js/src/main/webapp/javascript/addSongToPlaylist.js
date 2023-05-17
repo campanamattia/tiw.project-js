@@ -53,7 +53,7 @@
 											window.location.href = res1.getResponseHeader("location");
 											break;
 		                            default:
-		                                home.querySelector("#error").textContent = message1; //error
+		                                document.getElementById("playlist-page").querySelector("#error").textContent = message1; //error
 		                            }
 		                        }
 		                    }, null, false);
