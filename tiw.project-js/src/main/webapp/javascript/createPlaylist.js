@@ -50,7 +50,7 @@
                         	document.getElementById("home-page").querySelector("#crp-message").textContent = "Playlist succesfully Created";
                         	let date = new Date();
                         	date.setMonth(date.getMonth()+1); // by default is zero based
-                        	date = (date.getDay() < 10 ? '0' : '') + date.getDay() + '-' + (date.getMonth() < 10 ? '0' : '') + date.getMonth() + '-' + date.getYear();
+                        	date = (date.getDate() < 10 ? '0' : '') + date.getDate() + '-' + (date.getMonth() < 10 ? '0' : '') + date.getMonth() + '-' + date.getFullYear();
                             listPlaylist.push(new Playlist(playlistName, date));
                         	render.showAllPlaylistList();
                         	break;
@@ -71,9 +71,7 @@
     }, false);
 })();
 
-class Playlist {
-    constructor(name, date){
-        this.name = name;
-        this.date = date;
-    }
+function Playlist(name, date) {
+    this.name = name;
+    this.creationDate = date;
 }

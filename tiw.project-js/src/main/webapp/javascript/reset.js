@@ -20,7 +20,7 @@ function Reset() {
 
 
         //reset the checkbox fields
-        homePage.querySelector("#song-checkBox").innerHTML = "";
+        homePage.querySelector("#song-checkbox").innerHTML = "";
     }
 
     this.resetPlaylistPage = function() {

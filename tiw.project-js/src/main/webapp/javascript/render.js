@@ -56,7 +56,7 @@ function Render () {
 							case 200:
 								reset.resetHomePage();
 								songsInPlaylist = JSON.parse(message);
-                                render.showPlaylistPage(playlistName);
+                                render.showPlaylistPage(listPlaylist[i].name);
                                 break;
                             case 403:
 								window.sessionStorage.removeItem("userName");
@@ -73,7 +73,7 @@ function Render () {
 
             //add the date
             let columnDate = document.createElement("td");
-            let playlistDate = document.createTextNode(listPlaylist[i].date);
+            let playlistDate = document.createTextNode(listPlaylist[i].creationDate);
             columnDate.appendChild(playlistDate);
             row.appendChild(columnDate);
 
