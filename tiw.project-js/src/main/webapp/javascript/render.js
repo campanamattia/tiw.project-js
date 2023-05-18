@@ -18,6 +18,7 @@ function Render () {
             //creating the chackbox element
             let box = document.createElement("input");
             let label = document.createElement("label");
+            let div = document.createElement("div");
             box.type = "checkbox";
             box.name = "song" + i;
             label.htmlFor = "song" + i;
@@ -26,8 +27,9 @@ function Render () {
             label.textContent = listSong[i].title;
 
             //adding the song to the checkbox
-            checkbox.appendChild(box);
-            checkbox.appendChild(label);
+            div.appendChild(box);
+            div.appendChild(label);
+            checkbox.appendChild(div);
             
         }
 
