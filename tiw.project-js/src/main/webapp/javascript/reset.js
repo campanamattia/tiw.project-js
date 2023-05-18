@@ -5,7 +5,7 @@ function Reset() {
         let homePage = document.getElementById("home-page");
         
         //reset the title
-        home.querySelector("#title").textContent = "";
+        homePage.querySelector("#title").textContent = "";
 
         //reset errors and messages
         homePage.querySelectorAll(".message").forEach(element => {
