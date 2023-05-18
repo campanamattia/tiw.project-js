@@ -240,12 +240,9 @@ private Connection con;
 			if(queryRes.next()) {
 				result = new Song();
 				Album album = new Album();
-				result.setId(queryRes.getInt("SONG.Id"));
-				result.setTitle(queryRes.getString("SONG.Title"));
 				result.setGenre(queryRes.getString("SONG.Genre"));
 				result.setFileAudio(queryRes.getString("SONG.FileAudio"));
 				album.setTitle(queryRes.getString("ALBUM.Title"));
-				album.setFileImage(queryRes.getString("ALBUM.FileImage"));
 				album.setSinger(queryRes.getString("ALBUM.Singer"));
 				album.setYear(queryRes.getInt("ALBUM.PublicationYear"));
 				result.setAlbum(album);

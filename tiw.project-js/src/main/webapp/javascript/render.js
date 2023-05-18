@@ -345,31 +345,33 @@ function Render () {
         infoContainer.appendChild(div);
 
         //add the title
-        div.removeChild(image);
+        let div1 = document.createElement("div");
         let title = document.createElement("h1");
         title.textContent = "Title: " + song.title;
-        div.appendChild(title);
-        infoContainer.appendChild(div);
+        div1.appendChild(title);
+        infoContainer.appendChild(div1);
 
         //add the other info
-        div.removeChild(title);
+        let div2 = document.createElement("div");
         let singer = document.createElement("h1");
         singer.textContent = "Singer: " + details.singer;
-        div.appendChild(singer);
+        div2.appendChild(singer);
         let album = document.createElement("h2");
-        singer.textContent = "Album: " + details.album;
-        div.appendChild(album);
+        album.textContent = "Album: " + details.albumTitle;
+        div2.appendChild(album);
         let year = document.createElement("h3");
-        singer.textContent = "Publication Year: " + details.year;
-        div.appendChild(year);
+        year.textContent = "Publication Year: " + details.publicationYear;
+        div2.appendChild(year);
         let genre = document.createElement("hp");
-        singer.textContent = "Genre: " + details.genre;
-        div.appendChild(genre);
-        infoContainer.appendChild(div);
+        genre.textContent = "Genre: " + details.genre;
+        div2.appendChild(genre);
+        infoContainer.appendChild(div2);
 
         //add the player
-        let player = document.getElementById("player");
-        player.src = details.songContent;
+        let player = document.createElement("audio");
+        player.type = "audio/mpeg";
+        player.controls = "controls";
+        player.src = details.audioContent;
         playerPage.appendChild(player);
     };
 

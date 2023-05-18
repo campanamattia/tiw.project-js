@@ -86,7 +86,6 @@ public class PlaySongServlet extends HttpServlet{
 		//prepare the json object that will be sent
 		JsonObject jSonObject = new JsonObject();
 		
-		jSonObject.addProperty("songTitle" , song.getTitle());
 		jSonObject.addProperty("singer" , song.getAlbum().getSinger());
 		jSonObject.addProperty("albumTitle" , song.getAlbum().getTitle());
 		jSonObject.addProperty("publicationYear" , song.getAlbum().getYear());
