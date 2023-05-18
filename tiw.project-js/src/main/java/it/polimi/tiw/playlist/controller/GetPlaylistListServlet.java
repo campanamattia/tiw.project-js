@@ -49,11 +49,6 @@ public class GetPlaylistListServlet extends HttpServlet {
 				
 		try {
 			playlists = new PlaylistDAO(this.connection).allPlaylists(userName);
-			if(playlists == null || playlists.isEmpty()) {
-				response.setStatus(HttpServletResponse.SC_BAD_REQUEST);//Code 400
-				response.getWriter().println("You have no playlists saved");
-				return;
-			}
 		}catch(SQLException e) {
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);//Code 500
 			response.getWriter().println("Database error, try again");

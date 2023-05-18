@@ -110,7 +110,12 @@ function Render () {
                     switch (res.status) {
 						case 200:
                             listPlaylist = JSON.parse(message);
-                            render.showAllPlaylistList();
+                            if(listPlaylist.length === 0){
+								home.querySelector("#playlist-error").textContent = "You have no playlists saved";
+							}
+							else{
+								render.showAllPlaylistList();
+							}
                             break;
                         case 403:
 							window.sessionStorage.removeItem("userName");
@@ -131,7 +136,12 @@ function Render () {
                     switch (res.status) {
 						case 200:
                             listSong = JSON.parse(message);
-                            render.showCheckBoxSongs();
+                            if(listSong.length === 0){
+								home.querySelector("#get-songs-error").textContent = "You have no songs saved";
+							}
+							else {
+								render.showCheckBoxSongs();
+							}
                             break;
                         case 403:
 							window.sessionStorage.removeItem("userName");
