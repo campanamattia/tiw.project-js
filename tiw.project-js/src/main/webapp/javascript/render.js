@@ -49,7 +49,7 @@ function Render () {
 
             //add event listener to the playlist name
             columnName.onclick = function () {
-                makeCall("GET", "GetSongsInPlaylist?playlistName=" + playlistName, null, function (res) {
+                makeCall("GET", "GetSongsInPlaylist?playlistName=" + listPlaylist[i].name, null, function (res) {
                     if (res.readyState === XMLHttpRequest.DONE) {
                         let message = res.responseText;
                         switch (res.status) {
