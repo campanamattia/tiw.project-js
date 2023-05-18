@@ -214,7 +214,7 @@ function Render () {
             prec.className = "on";
             prec.onclick = function () {
 				                lowerBound -= 5;
-				                updateBlock();
+				                render.updateBlock();
 				            };
         }
 
@@ -230,7 +230,7 @@ function Render () {
             next.className = "on";
             next.onclick = function () {
 					            lowerBound += 5;
-					            updateBlock();
+					            render.updateBlock();
 					        };
         }
 
@@ -239,29 +239,38 @@ function Render () {
     this.showSongsNotInPlaylist = function () {
 		//all the songs the user can add to the playlist
         let songRoundBox = document.getElementById("playlist-page").querySelector("#song-roundbox");
+        songRoundBox.innerHTML = "";
 
         let songsNotInPlaylist = [...listSong];
 
         songsNotInPlaylist = songsNotInPlaylist.filter((songNot) => {
         return !songsInPlaylist.some(songIn => songIn.id === songNot.id);
         });
-
+		
+		if(songsNotInPlaylist.length === 0){
+			document.getElementById("playlist-page").querySelector("#song-error").textContent = "You have no more songs to add";
+			return;
+		}
+		
         //add the songs to the roundbox
         for (let i = 0; i < songsNotInPlaylist.length; i++) {
 
             //creating the radiobox element
             let box = document.createElement("input");
             let label = document.createElement("label");
+            let div = document.createElement("div");
             box.type = "radio";
             box.name = "song";
             label.htmlFor = "song" + i;
             box.id = "song" + i;
             box.value = songsNotInPlaylist[i].id;
-            label.textContent = songsNotInPlaylist[i].name;
+            label.textContent = songsNotInPlaylist[i].title;
 
             //adding the song to the roundbox
-            songRoundBox.appendChild(label);
-            songRoundBox.appendChild(box);
+            div.appendChild(box);
+            div.appendChild(label);
+            songRoundBox.appendChild(div);
+            
         }
 	};
 
@@ -286,7 +295,7 @@ function Render () {
         title.textContent = "Playlist: " + playlistName;
         playlist.querySelector("#playlistName").value = playlistName;
         
-        playlist.querySelector("modifying").textContent = "UPDATE " + playlistName;
+        playlist.querySelector("#modifying").textContent = "UPDATE " + playlistName;
 
         //add five sogns or less to the table
         this.updateBlock();

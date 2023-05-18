@@ -83,9 +83,8 @@ public class GetSongsInPlaylistServlet extends HttpServlet{
 		for(Song song : songsInPlaylist) {
 				jSonObject = new JsonObject();
 				
-				jSonObject.addProperty("songId", song.getId());
-				jSonObject.addProperty("songTitle" , song.getTitle());
-				jSonObject.addProperty("fileImage" , song.getAlbum().getFileImage());
+				jSonObject.addProperty("id", song.getId());
+				jSonObject.addProperty("title" , song.getTitle());
 				try {
 					jSonObject.addProperty("imageContent" , GetEncoding.getImageEncoding(userName + "_" + song.getAlbum().getFileImage() , getServletContext()));
 				} catch(IOException e) {
