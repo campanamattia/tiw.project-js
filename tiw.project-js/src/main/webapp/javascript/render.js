@@ -6,6 +6,11 @@ var listSong = [];
 var lowerBound = 0;
 var songsInPlaylist = [];
 
+//for the home button
+var goHome = function (e){
+		e.preventDefault();
+		render.showHomePage();
+};
 
 function Render () {
 		
