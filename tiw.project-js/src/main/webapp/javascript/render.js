@@ -23,11 +23,12 @@ function Render () {
             label.htmlFor = "song" + i;
             box.id = "song" + i;
             box.value = listSong[i].id;
-            label.textContent = listSong[i].name;
+            label.textContent = listSong[i].title;
 
             //adding the song to the checkbox
-            checkbox.appendChild(label);
             checkbox.appendChild(box);
+            checkbox.appendChild(label);
+            
         }
 
     };
