@@ -166,8 +166,10 @@ public class CreateSongServlet extends HttpServlet {
 		}
 		
 		//Updating the database
+		Integer addedSongId;
 		try {
-			if( !(new SongDAO(this.connection).addSongAndAlbum(songTitle, genre, fileAudioName, userName, albumTitle, fileImageName, singer, publicationYear)) ) {
+			addedSongId = new SongDAO(this.connection).addSongAndAlbum(songTitle, genre, fileAudioName, userName, albumTitle, fileImageName, singer, publicationYear);
+			if( addedSongId == -1 ) {
 				if(!alreadyExists) {
 					new File(fileImagePath).delete();
 				}
@@ -186,7 +188,8 @@ public class CreateSongServlet extends HttpServlet {
 			return;
 		}
 		
-		response.setStatus(HttpServletResponse.SC_OK);//Code 200	
+		response.setStatus(HttpServletResponse.SC_OK);//Code 200
+		response.getWriter().println(addedSongId.toString());
 	}
 	
 	public void destroy() {

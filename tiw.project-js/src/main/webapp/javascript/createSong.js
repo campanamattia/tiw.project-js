@@ -16,27 +16,10 @@
                     let message = res.responseText;
                     switch (res.status) {
 						case 200:
-							
-							makeCall("GET", "GetSongList", null, function (res1) {
-		                    if (res1.readyState === XMLHttpRequest.DONE) {
-		                        let message1 = res1.responseText;
-		                        switch (res1.status) {
-									case 200:
-										document.getElementById("home-page").querySelector("#song-message").textContent = "Song succesfully uploaded";
-			                            listSong = JSON.parse(message1);
-			                            form.reset();
-                        				render.showCheckBoxSongs();
-			                            break;
-			                        case 403:
-										window.sessionStorage.removeItem("userName");
-										window.location.href = res1.getResponseHeader("location");
-										break;
-		                        	default:
-		                            	document.getElementById("home-page").querySelector("#get-songs-error").textContent = message1; //song list error
-		                        }
-		                    }
-		                }, null, false);
-                        	
+							document.getElementById("home-page").querySelector("#song-message").textContent = "Song succesfully uploaded";
+							listSong.push(new Song(message,form.querySelector("#songTitle").value));
+							form.reset();
+                        	render.showCheckBoxSongs();
                         	break;
                         case 403:
 							window.sessionStorage.removeItem("userName");
@@ -53,3 +36,8 @@
         }
     },false);
 })();
+
+function Song (id,title){
+	this.id = id;
+	this.title = title;
+}

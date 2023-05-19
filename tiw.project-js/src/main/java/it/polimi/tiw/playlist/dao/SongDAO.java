@@ -161,22 +161,50 @@ private Connection con;
 	}
 	
 	//method that add a song and the corresponding album to the database
-	public boolean addSongAndAlbum(String songTitle , String genre , String audio, String userName , String albumTitle , String image,  String singer , int publicationYear) throws SQLException {
-		boolean result = false;
+	public int addSongAndAlbum(String songTitle , String genre , String audio, String userName , String albumTitle , String image,  String singer , int publicationYear) throws SQLException {
+		int result = -1;
+		String query = "SELECT Id FROM SONG WHERE Title = ? AND Genre = ? AND FileAudio = ? AND User = ? AND Album = ?";
+		PreparedStatement pStatement = null;
+		ResultSet queryRes = null;
 		
 		try {
+			pStatement = con.prepareStatement(query);
+			pStatement.setString(1, songTitle);
+			pStatement.setString(2, genre);
+			pStatement.setString(3, audio);
+			pStatement.setString(4, userName);	
+			
 			con.setAutoCommit(false);
 			
 			int albumId = this.addAlbum(albumTitle , image , singer , publicationYear);
+			pStatement.setInt(5, albumId);
 			if(this.addSong(songTitle, genre, audio, userName, albumId)) {
+				//take the last submitted song with those attributes, so the song we actually added to the database
+				queryRes = pStatement.executeQuery();		
+				while(queryRes.next()) {
+					result = queryRes.getInt("Id");
+				}
 				con.commit();
-				result = true;
 			}
 			else con.rollback();
 		}catch(SQLException e){
 			con.rollback();
 			throw e;
 		}finally {
+			try {
+				if(queryRes != null) {
+					queryRes.close();
+				}
+			}catch(Exception e1) {
+				throw new SQLException(e1);
+			}
+			try {
+				if(pStatement != null) {
+					pStatement.close();
+				}
+			}catch(Exception e2) {
+				throw new SQLException(e2);
+			}
 			con.setAutoCommit(true);
 		}
 		return result;
@@ -186,7 +214,7 @@ private Connection con;
 	public ArrayList<Song> getSongsbyUser(String userName) throws SQLException{
 		ArrayList<Song> result = new ArrayList<Song>();
 		String query = "SELECT SONG.Id, SONG.Title "
-				+ "FROM SONG JOIN ALBUM ON SONG.Album = ALBUM.Id WHERE SONG.User = ? ORDER BY ALBUM.PublicationYear DESC";
+				+ "FROM SONG  WHERE SONG.User = ?";
 		ResultSet queryRes = null;
 		PreparedStatement pStatement = null;
 		
