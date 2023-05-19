@@ -406,14 +406,15 @@ function Render () {
         let title = sortingPage.querySelector("#title");
         title.textContent = "Sorting: "+ playlistName;
 
-        sortingPage.querySelector("#update").onclick = function (){
-            pushNewSorting();
-        };
+        sortingPage.querySelector("#update").onclick = function (e){
+															e.preventDefault()
+												            pushNewSorting();
+												       };
         
        let list = sortingPage.querySelector("#sorting-ul");
-       for(let i = 0; i<songsInPlaylist; i++){
+       for(let i = 0; i<songsInPlaylist.length; i++){
             let li = document.createElement("li");
-            li.textContent = songsInPlaylist[i].name;
+            li.textContent = songsInPlaylist[i].title;
             li.id = songsInPlaylist[i].id;
             li.draggable = true;
             list.appendChild(li);
