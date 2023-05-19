@@ -64,6 +64,9 @@ function Reset() {
 		
 		//reset the song details
 		playerPage.querySelector("#info").innerHTML = "";
+		
+		//reset the player
+		playerPage.removeChild(playerPage.querySelector("audio"));
     }
 
     this.resetSortingPage = function() {
