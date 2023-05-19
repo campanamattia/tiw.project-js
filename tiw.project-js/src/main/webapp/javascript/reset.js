@@ -21,6 +21,10 @@ function Reset() {
 
         //reset the checkbox fields
         homePage.querySelector("#song-checkbox").innerHTML = "";
+        
+        //disable the forms
+        home.querySelector("#create-playlist-form").onsubmit = null;
+		home.querySelector("#song-form").onsubmit = null;
     }
 
     this.resetPlaylistPage = function() {
@@ -59,6 +63,9 @@ function Reset() {
         //reset the form that adds songs in the playlist
         playlistPage.querySelector("#playlistName").value = "";
         playlistPage.querySelector("#song-roundbox").innerHTML = "";
+        
+        //disable the form
+        playlist.querySelector("#add-song-form").onsubmit = null;
         
     }
 

@@ -154,7 +154,11 @@ function Render () {
             }, null, false);
         } else{
 			this.showCheckBoxSongs();
-		}   
+		}
+		
+		//enable the forms
+		home.querySelector("#create-playlist-form").onsubmit = createPlaylist;
+		home.querySelector("#song-form").onsubmit = createSong;
     };
     
     this.updateBlock = function () {
@@ -315,6 +319,7 @@ function Render () {
         
         playlist.querySelector("#modifying").textContent = "UPDATE " + playlistName;
         
+        //enable the sorting button
         playlist.querySelector("#editSortingButton").className = "on";
         playlist.querySelector("#editSortingButton").onclick = function(e) {
 			e.preventDefault();
@@ -322,10 +327,13 @@ function Render () {
 			render.showSortingPage(playlistName);
 		};
 
-        //add five sogns or less to the table
+        
         this.updateBlock();
 
         this.showSongsNotInPlaylist();
+        
+        //enable the form
+        playlist.querySelector("#add-song-form").onsubmit = addSongToPlaylist;
     };
 
     this.playSong = function (song, details) {
