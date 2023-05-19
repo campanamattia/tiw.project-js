@@ -19,6 +19,7 @@ import javax.servlet.http.HttpSession;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import it.polimi.tiw.playlist.beans.Song;
 import it.polimi.tiw.playlist.dao.PlaylistDAO;
 import it.polimi.tiw.playlist.dao.SongDAO;
 import it.polimi.tiw.playlist.utils.ConnectionHandler;
@@ -87,7 +88,7 @@ public class EditSortingServlet extends HttpServlet {
 		
 		if(newSorting == null || newSorting.length() <= 1) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);//Code 400	
-			response.getWriter().println("Add more songs to order you playlist!");
+			response.getWriter().println("Add more songs to order you playlist");
 			return;
 		}
 		
@@ -104,17 +105,18 @@ public class EditSortingServlet extends HttpServlet {
 		}
 		
 		
-		//Delete songs that do not belong to the user
-		for(Integer songId : sortedArray) {
-			try {
-				if( !(songDAO.belongTo(songId, userName)) ){
+		//Delete songs that are not in the playlist
+		try {
+			ArrayList<Song> songsInPlaylist = playlistDAO.getSongTitleAndImg(playlistName, userName);
+			for(Integer songId : sortedArray) {
+				if(!(songsInPlaylist.stream().map(x -> x.getId()).filter(x -> x == songId).findFirst().isPresent()) ){
 					sortedArray.remove(songId);
 				}
-			}catch(SQLException e) {
-				response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);//Code 500
-				response.getWriter().println("Database error, try again");
-				return;
 			}
+		}catch(SQLException e) {
+			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);//Code 500
+			response.getWriter().println("Database error, try again");
+			return;
 		}
 		
 		//Re-convert the arrayList of integer in the String to upload

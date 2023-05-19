@@ -25,7 +25,7 @@ function Reset() {
         //disable the forms
         homePage.querySelector("#create-playlist-form").onsubmit = null;
 		homePage.querySelector("#song-form").onsubmit = null;
-    }
+    };
 
     this.resetPlaylistPage = function() {
         lowerBound = 0;
@@ -67,7 +67,7 @@ function Reset() {
         //disable the form
         playlistPage.querySelector("#add-song-form").onsubmit = null;
         
-    }
+    };
 
     this.resetPlayerPage = function() {
 		let playerPage = document.getElementById("player-page");
@@ -77,7 +77,7 @@ function Reset() {
 		
 		//reset the player
 		playerPage.removeChild(playerPage.querySelector("audio"));
-    }
+    };
 
     this.resetSortingPage = function() {
 		let sortingPage = document.getElementById("sorting-page");
@@ -85,10 +85,15 @@ function Reset() {
 		//reset the title
         sortingPage.querySelector("#title").textContent = "";
         
+        //reset the error
+        sortingPage.querySelector("#error").textContent = "";
+        
         //reset the list of songs
         sortingPage.querySelector("#sorting-ul").innerHTML = "";
         
         //reset the update button
         sortingPage.querySelector("#update").onclick = null;
-    }
-}
+        
+        draggedElement = null;
+    };
+};
