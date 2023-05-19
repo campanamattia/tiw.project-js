@@ -7,12 +7,10 @@
                 switch(res.status){
 					case 200:
 	                    sessionStorage.clear();
-                        //localStorage.clear();
-                        //do we need to reset all the variables?
 	                    window.location.href = "sign-in.html";
 	                    break;
 	                case 403:
-						window.sessionStorage.removeItem("userName");
+						sessionStorage.clear();
 						window.location.href = res.getResponseHeader("location");
 						break;
                     default:

@@ -48,7 +48,7 @@ var addSongToPlaylist = function(e) {
 		                                render.showPlaylistPage(playlistName);
 		                                break;
 		                            case 403:
-										window.sessionStorage.removeItem("userName");
+										sessionStorage.clear();
 										window.location.href = res1.getResponseHeader("location");
 										break;
 	                            default:
@@ -59,7 +59,7 @@ var addSongToPlaylist = function(e) {
 	                        	
                     	break;
                     case 403:
-						window.sessionStorage.removeItem("userName");
+						sessionStorage.clear();
 						window.location.href = res.getResponseHeader("location");
 						break;
                 	default:

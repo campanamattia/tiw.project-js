@@ -64,7 +64,7 @@ function Render () {
                                 render.showPlaylistPage(listPlaylist[i].name);
                                 break;
                             case 403:
-								window.sessionStorage.removeItem("userName");
+								sessionStorage.clear();
 								window.location.href = res.getResponseHeader("location");
 								break;
                         default:
@@ -118,7 +118,7 @@ function Render () {
 							}
                             break;
                         case 403:
-							window.sessionStorage.removeItem("userName");
+							sessionStorage.clear();
 							window.location.href = res.getResponseHeader("location");
 							break;
                     	default:
@@ -144,7 +144,7 @@ function Render () {
 							}
                             break;
                         case 403:
-							window.sessionStorage.removeItem("userName");
+							sessionStorage.clear();
 							window.location.href = res.getResponseHeader("location");
 							break;
                     	default:
@@ -200,7 +200,7 @@ function Render () {
                                 render.playSong(songsInPlaylist[i], JSON.parse(message));
                                 break;
                             case 403:
-								window.sessionStorage.removeItem("userName");
+								sessionStorage.clear();
                                 window.location.href = res.getResponseHeader("location");
                                 break;
                             default:

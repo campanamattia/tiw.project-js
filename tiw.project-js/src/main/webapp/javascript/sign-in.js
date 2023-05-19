@@ -20,7 +20,7 @@
 	                        window.location.href = "ThePlaylist.html";
 	                        break;
 	                    case 403:
-							window.sessionStorage.setItem("userName",request.getResponseHeader("userName"));
+							sessionStorage.setItem("userName",request.getResponseHeader("userName"));
 							window.location.href = res.getResponseHeader("location");
 							break;
                     	default:

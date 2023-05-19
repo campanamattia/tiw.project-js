@@ -21,7 +21,7 @@ var createSong = function(e) {
                     	render.showCheckBoxSongs();
                     	break;
                     case 403:
-						window.sessionStorage.removeItem("userName");
+						sessionStorage.clear();
 						window.location.href = res.getResponseHeader("location");
 						break;
                 	default:

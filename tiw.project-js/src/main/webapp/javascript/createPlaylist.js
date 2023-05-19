@@ -54,7 +54,7 @@ var createPlaylist = function(e) {
                     	render.showAllPlaylistList();
                     	break;
                     case 403:
-						window.sessionStorage.removeItem("userName");
+						sessionStorage.clear();
 						window.location.href = res.getResponseHeader("location");
 						break;
                 	default:

@@ -16,6 +16,7 @@
                         applyNewSort(newSort);
                         break;
                     case 403:
+						sessionStorage.clear();
                         window.location.href = request.getResponseHeader("location");
 						break;
                     default: document.getElementById("sorting-page").querySelector("error").textContent = message;
