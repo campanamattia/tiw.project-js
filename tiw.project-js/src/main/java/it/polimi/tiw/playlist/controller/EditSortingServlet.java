@@ -21,7 +21,6 @@ import com.google.gson.GsonBuilder;
 
 import it.polimi.tiw.playlist.beans.Song;
 import it.polimi.tiw.playlist.dao.PlaylistDAO;
-import it.polimi.tiw.playlist.dao.SongDAO;
 import it.polimi.tiw.playlist.utils.ConnectionHandler;
 import it.polimi.tiw.playlist.utils.FromJsonToArray;
 
@@ -48,7 +47,6 @@ public class EditSortingServlet extends HttpServlet {
 
 	public void doPost(HttpServletRequest request , HttpServletResponse response)throws ServletException,IOException{
 		HttpSession session = request.getSession(true);
-		SongDAO songDAO = new SongDAO(this.connection);
 		PlaylistDAO playlistDAO = new PlaylistDAO(this.connection);
 		String userName = (String)session.getAttribute("user");
 		
@@ -84,16 +82,16 @@ public class EditSortingServlet extends HttpServlet {
 	    
 		//Create the jSon with the sorting
 		Gson gSon = new GsonBuilder().create();
-		String newSorting = gSon.toJson(jb);
+		String newSorting = gSon.toJson(jb).replaceAll("\"", "");
 		
-		if(newSorting == null || newSorting.length() <= 1) {
+		//Convert the String array in an arrayList of integer in order to make some checks
+		ArrayList<Integer> sortedArray = FromJsonToArray.fromJsonToArrayList(newSorting);
+		
+		if(sortedArray == null || sortedArray.size() <= 1) {
 			response.setStatus(HttpServletResponse.SC_BAD_REQUEST);//Code 400	
 			response.getWriter().println("Add more songs to order you playlist");
 			return;
 		}
-		
-		//Convert the String array in an arrayList of integer in order to make some checks
-		ArrayList<Integer> sortedArray = FromJsonToArray.fromJsonToArrayList(newSorting);
 		
 		//Delete duplicates of the same song
 		for(int i = 0 ; i < sortedArray.size() ; i++) {
