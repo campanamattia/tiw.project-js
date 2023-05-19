@@ -45,14 +45,21 @@ img{
 
 .row-container{
     display: flex;
+    flex-direction: row wrap;
+    justify-content: space-around;
+    align-items: strech;
+}
+
+.song-info {
+	display: flex;
     flex-direction: wrap-row;
-    justify-content: space-between;
-    align-items: center;
+    justify-content: center;
+    align-items: strech;
 }
 
 .column-container{
     display: flex;
-    flex-direction: wrap-column;
+    flex-direction: column wrap;
     justify-content: space-between;
     align-items: center;
 }
