@@ -41,10 +41,10 @@ var addSongToPlaylist = function(e) {
 	                            let message1 = res1.responseText;
 	                            switch (res1.status) {
 									case 200:
-										document.getElementById("playlist-page").querySelector("#message").textContent = "Song succesfully added to the playlist";
                     					lowerBound = 0;
 										songsInPlaylist = JSON.parse(message1);
 		                                reset.resetPlaylistPage();
+		                                document.getElementById("playlist-page").querySelector("#message").textContent = "Song succesfully added to the playlist";
 		                                render.showPlaylistPage(playlistName);
 		                                break;
 		                            case 403:
