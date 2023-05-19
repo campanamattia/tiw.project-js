@@ -356,27 +356,27 @@ function Render () {
         infoContainer.appendChild(div);
 
         //add the title
-        let div1 = document.createElement("div");
+        div = document.createElement("div");
         let title = document.createElement("h1");
         title.textContent = "Title: " + song.title;
-        div1.appendChild(title);
-        infoContainer.appendChild(div1);
+        div.appendChild(title);
+        infoContainer.appendChild(div);
 
         //add the other info
-        let div2 = document.createElement("div");
+        div = document.createElement("div");
         let singer = document.createElement("h1");
         singer.textContent = "Singer: " + details.singer;
-        div2.appendChild(singer);
+        div.appendChild(singer);
         let album = document.createElement("h2");
         album.textContent = "Album: " + details.albumTitle;
-        div2.appendChild(album);
+        div.appendChild(album);
         let year = document.createElement("h3");
         year.textContent = "Publication Year: " + details.publicationYear;
-        div2.appendChild(year);
+        div.appendChild(year);
         let genre = document.createElement("hp");
         genre.textContent = "Genre: " + details.genre;
-        div2.appendChild(genre);
-        infoContainer.appendChild(div2);
+        div.appendChild(genre);
+        infoContainer.appendChild(div);
 
         //add the player
         let player = document.createElement("audio");
