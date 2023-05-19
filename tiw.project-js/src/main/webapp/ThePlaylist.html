@@ -119,7 +119,10 @@
 						</table>
 						<div class="row-container">
 							<div id="precButton">
-								<button type="button">PREC</button>
+								<button type="button">PREV</button>
+							</div>
+							<div id="editSorting">
+								<button type="button">SORT PLAYLIST</button>
 							</div>
 							<div id="nextButton">
 								<button type="button">NEXT</button>
@@ -127,15 +130,14 @@
 						</div>
 					</div>
 					<div>
-						<h2 id="modifying"><span><button id="add-song">SUBMIT</button></span></h2>
-						<p id="song-error" class="error"></p>
-
+						<h2 id="modifying"></h2>
 						<form action="#" id="add-song-form">
+							<input type="submit" id="add-song" value="ADD">
+							<p id="song-error" class="error"></p>
 							<input type="hidden" id="playlistName" name="playlistName" required>
 							<div class="vertical" id="song-roundbox">
 								<!--song roundbox-->
 							</div>
-							<input type="submit" id="add-song" value="ADD">
 						</form>
 					</div>
 				</div>
