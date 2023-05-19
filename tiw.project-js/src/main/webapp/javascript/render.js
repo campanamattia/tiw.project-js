@@ -227,7 +227,8 @@ function Render () {
 
             //if the lower bound is greater than zero then we turn on the prec button
             prec.className = "on";
-            prec.onclick = function () {
+            prec.onclick = function (e) {
+								e.preventDefault();
 				                lowerBound -= 5;
 				                render.updateBlock();
 				            };
@@ -243,7 +244,8 @@ function Render () {
 
             //if the lower bound is less than song In Playlist then we turn on the next button
             next.className = "on";
-            next.onclick = function () {
+            next.onclick = function (e) {
+								e.preventDefault();
 					            lowerBound += 5;
 					            render.updateBlock();
 					        };
@@ -300,6 +302,7 @@ function Render () {
         let homeButton = document.getElementById("home-button");
         homeButton.className = "on";
         homeButton.onclick = function(e){
+								e.preventDefault();
 								reset.resetPlaylistPage();
 								goHome(e);
 							 }
@@ -311,6 +314,13 @@ function Render () {
         playlist.querySelector("#playlistName").value = playlistName;
         
         playlist.querySelector("#modifying").textContent = "UPDATE " + playlistName;
+        
+        playlist.querySelector("#editSortingButton").className = "on";
+        playlist.querySelector("#editSortingButton").onclick = function(e) {
+			e.preventDefault();
+			reset.resetPlaylistPage();
+			render.showSortingPage(playlistName);
+		};
 
         //add five sogns or less to the table
         this.updateBlock();
@@ -329,6 +339,7 @@ function Render () {
 		let homeButton = document.getElementById("home-button");
         homeButton.className = "on";
         homeButton.onclick = function(e){
+								 e.preventDefault();
 								 reset.resetPlayerPage();
 								 goHome(e);							
 							 }
@@ -375,7 +386,7 @@ function Render () {
         playerPage.appendChild(player);
     };
 
-    this.showSortingPage = function () {
+    this.showSortingPage = function (playlistName) {
 
         //make the sorting page the only visible page
         document.getElementById("home-page").className = "off";
@@ -386,13 +397,14 @@ function Render () {
         let homeButton = document.getElementById("home-button");
         homeButton.className = "on";
         homeButton.onclick = function(e){
+								 e.preventDefault();
 								 reset.resetSortingPage();
 								 goHome(e);							
 							 }
 
         let sortingPage = document.getElementById("sorting-page");
         let title = sortingPage.querySelector("#title");
-        title.textContent = "Sorting: "+ playlist.name;
+        title.textContent = "Sorting: "+ playlistName;
 
         sortingPage.querySelector("#update").onclick = function (){
             pushNewSorting();

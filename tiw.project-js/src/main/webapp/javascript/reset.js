@@ -45,10 +45,13 @@ function Reset() {
         //remove the buttons
         let prec = playlistPage.querySelector("#precButton");
         let next = playlistPage.querySelector("#nextButton");
+        let edit = playlistPage.querySelector("#editSortingButton");
         prec.className = "off";
         next.className = "off";
+        edit.className = "off";
         prec.onclick = null;
         next.onclick = null;
+        edit.onclick = null;
         
         //reset the title in the edit section
         playlistPage.querySelector("#modifying").textContent = "";
