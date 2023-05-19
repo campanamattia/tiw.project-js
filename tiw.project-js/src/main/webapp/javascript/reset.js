@@ -23,8 +23,8 @@ function Reset() {
         homePage.querySelector("#song-checkbox").innerHTML = "";
         
         //disable the forms
-        home.querySelector("#create-playlist-form").onsubmit = null;
-		home.querySelector("#song-form").onsubmit = null;
+        homePage.querySelector("#create-playlist-form").onsubmit = null;
+		homePage.querySelector("#song-form").onsubmit = null;
     }
 
     this.resetPlaylistPage = function() {
@@ -65,7 +65,7 @@ function Reset() {
         playlistPage.querySelector("#song-roundbox").innerHTML = "";
         
         //disable the form
-        playlist.querySelector("#add-song-form").onsubmit = null;
+        playlistPage.querySelector("#add-song-form").onsubmit = null;
         
     }
 
