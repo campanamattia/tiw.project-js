@@ -1,7 +1,7 @@
 var draggedElement = null;
 
 var pushNewSorting = function(playlistName){
-    let list = document.dgetElementById("sorting-page").querySelector("ul").querySelectorAll("li");
+    let list = document.getElementById("sorting-page").querySelector("ul").querySelectorAll("li");
     if(list.length <= 1){
 		document.getElementById("sorting-page").querySelector("#error").textContent = "Add more songs to order you playlist";
         render.showSortingPage();
@@ -15,10 +15,10 @@ var pushNewSorting = function(playlistName){
     }
     
     let newSort = [];
-    for(let i = 0; list.length; i++){
-        newSort.push(list[i].id);
+    for(let i = 0;i<list.length; i++){
+        newSort.push(parseInt(list[i].id));
     }
-    makeCall("POST", "/EditSorting?playlistName=" + playlistName, null, function(res){
+    makeCall("POST", "EditSorting?playlistName=" + playlistName, null, function(res){
         if(res === XMLHttpRequest.DONE){
             let message = res.responseText;
             switch(res.satus){
