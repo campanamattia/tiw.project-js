@@ -297,7 +297,7 @@ public class PlaylistDAO {
 		try {
 			pStatement = con.prepareStatement(query);
 			pStatement.setString(1, playlistName);
-			pStatement.setString(2, playlistName);
+			pStatement.setString(2, userName);
 			
 			queryRes = pStatement.executeQuery();
 			
