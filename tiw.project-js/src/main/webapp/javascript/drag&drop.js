@@ -19,11 +19,11 @@ var pushNewSorting = function(playlistName){
         newSort.push(parseInt(list[i].id));
     }
     makeCall("POST", "EditSorting?playlistName=" + playlistName, null, function(res){
-        if(res === XMLHttpRequest.DONE){
+        if(res.readyState === XMLHttpRequest.DONE){
             let message = res.responseText;
-            switch(res.satus){
+            switch(res.status){
                 case 200:
-                    
+
 					 makeCall("GET", "GetSongsInPlaylist?playlistName=" + playlistName, null, function (res1) {
 	                        if (res1.readyState === XMLHttpRequest.DONE) {
 	                            let message1 = res1.responseText;
