@@ -422,15 +422,18 @@ function Render () {
        let list = sortingPage.querySelector("#sorting-ul");
        for(let i = 0; i<songsInPlaylist.length; i++){
             let li = document.createElement("li");
+            list.appendChild(li);
             li.textContent = songsInPlaylist[i].title;
             li.id = songsInPlaylist[i].id;
             li.draggable = true;
-            list.appendChild(li);
+            li.addEventListener("dragstart", dragStart);
+			li.addEventListener("dragover", dragOver);
+			li.addEventListener("drop", drop);
+			li.addEventListener("dragend", dragEnd);   
        }
-       applyDragAndDrop();
     };
 
-}
+};
 
 var render = new Render();
 

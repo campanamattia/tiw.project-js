@@ -54,15 +54,15 @@ var pushNewSorting = function(playlistName){
             }
         }
     }, newSort, false);
-}
+};
 
 var dragStart = function(e){
 	elementToDrag = e.target;
-}
+};
 
 var dragOver = function (e){
 	e.preventDefault();
-}
+};
 
 var drop = function (e){
 	e.preventDefault();
@@ -84,19 +84,9 @@ var drop = function (e){
 		}
 		
 	}
-}
+};
 
 var dragEnd = function (e){
 	e.preventDefault();
 	elementToDrag = null;
-}
-
-var applyDragAndDrop = function (){
-	let list = document.getElementById("sorting-page").querySelectorAll("li");
-	list.forEach(item =>{
-		item.addEventListener("dragstart", dragStart);
-		item.addEventListener("dragover", dragOver);
-		item.addEventListener("drop", drop);
-		item.addEventListener("dragend", dragEnd);
-	});
-}
+};
