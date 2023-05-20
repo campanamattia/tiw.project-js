@@ -269,7 +269,7 @@ public class PlaylistDAO {
 			pStatement = con.prepareStatement(query);
 			pStatement.setString(1, jsonSorting);
 			pStatement.setString(2, playlistName);
-			pStatement.setString(3, playlistName);
+			pStatement.setString(3, userName);
 			if(pStatement.executeUpdate() > 0) result = true;
 		}catch(SQLException e) {
 			throw new SQLException();
