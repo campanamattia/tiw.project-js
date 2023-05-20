@@ -113,22 +113,25 @@
 				<p id="message" class="message"></p>
 				<div id="column-container" class="playlist-container">
 					<div>
-						<h2>Songs</h2>
-						<table id="song-table" class="vertical">
-							<!--song + singer + album + genre + year-->
-						</table>
-						<div class="row-container">
+						<h2 style="text-align: center;">Songs</h2>
+						<div class="row-container alignCenter">
 							<div id="precButton">
 								<button type="button">PREV</button>
 							</div>
-							<div id="editSortingButton">
-								<button type="button">SORT PLAYLIST</button>
-							</div>
+							<table id="song-table" class="vertical">
+							<!--song + singer + album + genre + year-->
+							</table>
 							<div id="nextButton">
 								<button type="button">NEXT</button>
 							</div>
 						</div>
+						<div class="row-container" >
+							<div id="editSortingButton">
+								<button type="button">SORT PLAYLIST</button>
+							</div>
+						</div>
 					</div>
+					<!-- modifying section -->
 					<div>
 						<h2 id="modifying"></h2>
 						<form action="#" id="add-song-form">
@@ -146,7 +149,7 @@
 
 			<!--PLAYER PAGE-->
 			<div id="player-page" class="off">
-				<div id="info" class="song-info"></div>
+				<div id="info" class="song-box"></div>
 			</div>
 
 

@@ -50,9 +50,20 @@ img{
     align-items: strech;
 }
 
+.alignCenter{
+	align-items: center;
+}
+
+.song-box{
+	display: flex;
+    flex-direction: row wrap;
+	align-items: flex-start;
+	justify-content: center;
+}
+
 .song-info {
 	display: flex;
-    flex-direction: wrap-row;
+    flex-direction: row wrap;
     justify-content: center;
     align-items: strech;
 }
@@ -61,7 +72,7 @@ img{
     display: flex;
     flex-direction: column wrap;
     justify-content: space-between;
-    align-items: center;
+    align-items: strech;
 }
 
 .title{
