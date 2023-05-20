@@ -425,11 +425,9 @@ function Render () {
             li.textContent = songsInPlaylist[i].title;
             li.id = songsInPlaylist[i].id;
             li.draggable = true;
-            li.addEventListener("dragstart" , dragStart);
-			li.addEventListener("dragover" , dragOver);
-	        li.addEventListener("drop" , drop);
             list.appendChild(li);
        }
+       applyDragAndDrop();
     };
 
 }

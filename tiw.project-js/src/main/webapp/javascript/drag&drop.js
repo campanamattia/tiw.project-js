@@ -1,4 +1,4 @@
-var draggedElement = null;
+var elementToDrag = null;
 
 var pushNewSorting = function(playlistName){
     let list = document.getElementById("sorting-page").querySelector("ul").querySelectorAll("li");
@@ -56,33 +56,35 @@ var pushNewSorting = function(playlistName){
     }, newSort, false);
 }
 
-var dragStart = function(e) {
-    draggedElement = e.target;
-};
+var dragStart = function(e){
+	elementToDrag = e.target;
+}
 
-var dragOver = function(e) {
-    e.preventDefault();
-};
+var dragOver = function (e){
+	e.preventDefault();
+}
 
-var drop = function(e) {
-	let targetElement = e.target;
-	if (targetElement === draggedElement) {
-		draggedElement = null;
-        return;
-    }
-    let ul = e.target.closest("ul");
-	let list = ul.querySelectorAll("li");
-	let destinationIndex = list.indexOf(targetElement);
-	let startingIndex = list.indexOf(draggedElement);
-	
-	if(startingIndex < destinationIndex){
-		if(destinationIndex != list.length-1){
-			ul.insertBefore(draggedElement,list[destinationIndex+1]);
-		}
-		else ul.appendChild(draggedElement);
+var drop = function (e){
+	e.preventDefault();
+	let dropSite = e.target;
+	if(elementToDrag !== dropSite){
+		let list = document.getElementById("sorting-page").querySelector("ul");
+		list.removeChild(elementToDrag);
+		list.insertBefore(elementToDrag, dropSite);
 	}
-	else{
-		ul.insertBefore(draggedElement,list[destinationIndex]);
-	}
-	draggedElement = null;
+}
+
+var dragEnd = function (e){
+	e.preventDefault();
+	elementToDrag = null;
+}
+
+var applyDragAndDrop = function (){
+	let list = document.getElementById("sorting-page").querySelectorAll("li");
+	list.forEach(item =>{
+		item.addEventListener("dragstart", dragStart);
+		item.addEventListener("dragover", dragOver);
+		item.addEventListener("drop", drop);
+		item.addEventListener("dragend", dragEnd);
+	});
 }
