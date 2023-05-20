@@ -68,9 +68,21 @@ var drop = function (e){
 	e.preventDefault();
 	let dropSite = e.target;
 	if(elementToDrag !== dropSite){
-		let list = document.getElementById("sorting-page").querySelector("ul");
-		list.removeChild(elementToDrag);
-		list.insertBefore(elementToDrag, dropSite);
+		let ul = e.target.closest("ul");
+		let list = Array.from(ul.querySelectorAll("li"));
+		let destinationIndex = list.indexOf(dropSite);
+		let startingIndex = list.indexOf(elementToDrag);
+		ul.removeChild(elementToDrag)
+		if(startingIndex < destinationIndex){
+			if(dropSite.nextElementSibling != null){
+				ul.insertBefore(elementToDrag,dropSite.nextElementSibling);
+			}
+			else ul.appendChild(elementToDrag);
+		}
+		else{
+			ul.insertBefore(elementToDrag,dropSite);
+		}
+		
 	}
 }
 
