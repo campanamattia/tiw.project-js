@@ -218,8 +218,8 @@ function Render () {
         table.appendChild(row);
 
         //add the buttons
-        let prec = playlist.querySelector("#precButton");
-        let next = playlist.querySelector("#nextButton");
+        let prec = playlist.querySelector("#precButton").querySelector("button");
+        let next = playlist.querySelector("#nextButton").querySelector("button");
 
         //set the prec button
         if (lowerBound <= 0) {

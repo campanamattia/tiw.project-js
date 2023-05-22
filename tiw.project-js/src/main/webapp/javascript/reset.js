@@ -47,8 +47,8 @@ function Reset() {
         playlistPage.querySelector("#song-table").innerHTML = "";
         
         //remove the buttons
-        let prec = playlistPage.querySelector("#precButton");
-        let next = playlistPage.querySelector("#nextButton");
+        let prec = playlistPage.querySelector("#precButton").querySelector("button");
+        let next = playlistPage.querySelector("#nextButton").querySelector("button");
         let edit = playlistPage.querySelector("#editSortingButton");
         prec.className = "off";
         next.className = "off";
